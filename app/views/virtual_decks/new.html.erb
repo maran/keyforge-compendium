@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col">
+    <div class="alert alert-danger">
+      <h4 class="text-danger">Warning</h4>
+      <p>This feature is for unregistered decks only, please verify the deck is not presently registered on the official website. Duplicates will be deleted.</p>
+      <p>Also note that an admin will have to verify the deck before the import is completed, if you are pressed for time registering the deck on the official website will be faster.</p>
+    </div>
+    <%= simple_form_for @deck, url: virtual_decks_path do |f| %>
+      <%= f.input :list_image, as: :file, hint: "Select a decklist image to start importing a unregistered deck" %>
+      <%= f.submit "Scan deck", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

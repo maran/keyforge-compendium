@@ -1,0 +1,15 @@
+<% description "Import your deck to KeyForge Compendium" %>
+
+<section class="kfc__pagehead">
+    <h1><%= title "Import KeyForge Deck" %></h1>
+    <p>Lookup your deck on the official <%= link_to "Keyforge site", "https://www.keyforgegame.com/search" %> and copy the full URL in the box below.</p>
+    <p>Decks are automatically imported from the official website hourly, so your deck should probably already be available, if not you can import it here.</p>
+</section>
+
+<section class="kfc__import">
+  <%=form_for(@deck) do |f| %>
+    <%= f.text_field :id, placeholder: "Deck URL"%>
+    <%= f.submit "Import deck", class: "btn btn-secondary" %>
+  <% end %>
+  <small>If your deck is not registered on the official website yet you can can <%= link_to "import it manually here", new_virtual_deck_path %>.</small>
+</section>

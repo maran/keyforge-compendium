@@ -1,0 +1,182 @@
+.select2-container {
+  width:100%;
+  
+  &--default {
+    .select2-selection {
+      font-weight: 600;
+      border-radius: .2rem;
+
+      &--single {
+        background: $secondary;
+        border: 0;
+        height: 4.5rem;
+      }
+
+      &__rendered {
+        line-height: 4.5rem;
+        padding: 0 2rem 0 1rem;
+        color: #FFF;
+
+        .select2-selection__clear {
+          font-size: 2.4rem;
+          color: $error;
+          width: 3rem;
+          margin: 0;
+          text-align: center;
+          opacity: 1;
+
+          &:hover {
+            color: darken($error, 5%);
+          }
+        }
+      }
+
+      &__placeholder {
+        color: $placeholder;
+      }
+
+      &__clear {
+        margin-right:1rem;
+        opacity:.5;
+        transition:.2s all;
+
+        &:hover {
+          opacity:1;
+        }
+      }
+
+      &__arrow {
+        line-height: 4.5rem;
+        height: 4.5rem;
+        width: 3rem;
+      }
+    }
+  }
+
+  &--focus {
+    .select2-selection--single {
+      outline: none;
+      box-shadow: none;
+    }
+  }
+
+  &--open {
+    .select2-selection {
+      &--single {
+        background:darken($secondary, 2%);
+      }
+    }
+  }
+}
+
+.checkbox {
+  position:relative;
+
+  input[type="checkbox"] {
+    position:absolute;
+    visibility: hidden;
+    opacity: 0;
+  }
+
+  &__label {
+    padding-left: 3.5rem;
+    position:relative;
+    font-weight:bold;
+    line-height: 2.5rem;
+    border-radius: .2rem;
+    cursor:pointer;
+
+    &:after,
+    &:before {
+      position:absolute;
+      top:0;
+      left:0;
+      width: 2.5rem;
+      height:2.5rem;
+      line-height: 2.5rem;
+      transition:.2s all;
+    }
+
+    &:before {
+      content: "";
+      background: $secondary;
+      box-shadow: inset 0 0 5px rgba(0, 0, 0, .05);
+    }
+
+    &:after {
+      content: "\f00c";
+      font-family: FontAwesome;
+      font-style: normal;
+      font-weight: normal;
+      text-decoration: inherit;
+      opacity:.1;
+      color:#FFF;
+      text-align:center;
+    }
+
+    &:hover {
+      &:before {
+        background: lighten($secondary, 15%);
+      }
+    }
+  }
+
+  &.activecb {
+    .checkbox__label {
+      &:before {
+        background: lighten($secondary, 15%);
+      }
+
+      &:after {
+        opacity:1;
+      }
+    }
+  }
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="password"],
+select {
+  width:100%;
+  border-radius: .2rem;
+  height:4.5rem;
+  color:#FFF;
+  border:0;
+  padding: .5rem 1rem;
+  transition:.2s all;
+  background:$secondary;
+  font-weight:600;
+
+  @include placeholder() {
+    color: $placeholder;
+  }
+
+  &:focus {
+    outline:none;
+    background:darken($secondary, 2%);
+  }
+}
+
+textarea {
+  width:100%;
+  border-radius: .2rem;
+  height:20rem;
+  color:#FFF;
+  border:0;
+  padding: .5rem 1rem;
+  transition:.2s all;
+  background:$secondary;
+  font-weight:600;
+  resize:none;
+
+  @include placeholder() {
+    color: $placeholder;
+  }
+
+  &:focus {
+    outline: none;
+    background: darken($secondary, 2%);
+  }
+}

@@ -1,0 +1,28 @@
+<section class="kfc__pagehead">
+    <h1><%= title 'Register' %></h1>
+</section>
+
+<section class="kfc__user kfc__user--signup">
+  <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <%= bootstrap_devise_error_messages! %>
+
+    <div class="form-group">
+      <%= f.email_field :email, autofocus: true, autocomplete: 'email', class: 'form-control', placeholder: 'Enter Email Address' %>
+    </div>
+
+    <%= f.input :username, placeholder: "Username (optional)", label: false %>
+
+    <div class="form-group">
+      <%= f.password_field :password, autocomplete: 'current-password', class: 'form-control', placeholder: 'Enter Password' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.password_field :password_confirmation, autocomplete: 'current-password', class: 'form-control', placeholder: 'Repeat Password' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.submit 'Register', class: 'btn btn-primary' %>
+    </div>
+  <% end %>
+  <%= render 'devise/shared/links' %>
+</section>

@@ -1,0 +1,46 @@
+<% des =  "Keyforge Rules based on the official Rulebook" %>
+
+<% description des %>
+<% set_meta_tags og: {type: "article", title: "Keyforge Rules", image: Card.first.front_image, site_name:  "Keyforge Compendium", description: des, url: rules_url } %>
+<% set_meta_tags twitter: {card: "summary", title: "Keyforge Rules", image: Card.first.front_image, site_name:  "Keyforge Compendium", description: des, url: rules_url } %>
+<% set_meta_tags canonical: rules_url %>
+
+<div class="kfc__pagehead">
+  <h1><%= title "Keyforge Rules" %></h1>
+  <p>Based on official rules Version 1.2 - January 2019</p>
+  <p><%= link_to "Download latest official Rulebook as PDF", "https://images-cdn.fantasyflightgames.com/filer_public/c2/16/c2169c07-0337-4bd1-977a-c575b5eda946/keyforge_rulebook_v8-compressed.pdf" %></p>
+</div>
+
+<div class="kfc__rules">
+  <div class="kfc__rules__glossary">
+    <div class="rules-search">
+      <input type="text" class="js-rules-search" placeholder="Search Rules">
+      <i class="js-toggle-glossary fa fa-bars"></i>
+    </div>
+
+    <ul class="js-rules">
+      <% Rule.order(position: :asc).all.each do |r| %>
+        <li><a href="#<%= r.slug %>" data-id="<%= r.slug %>"><%= r.title %></a></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="kfc__rules__content">
+    <div class="js-results results"></div>
+    <% Rule.order(position: :asc).all.each do |r| %>
+      <div class="kfc-rule" id="<%= r.slug %>">
+        <h5>
+          <input readonly class="clipboard-input" type="text" value="http://keyforge-compendium.com/rules#<%= r.slug %>">
+          <i class="fa fa-link js-copy-link"></i>
+          <%= r.title%>
+        </h5>
+        <%=raw Kramdown::Document.new(r.content).to_html %>
+        <div id="accordion-<%= r.id%>">
+          <% r.faqs.each do |f| %>
+            <%= render partial: "/faqs/faq", locals: {f: f, parent: "accordion-#{r.id}"} %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

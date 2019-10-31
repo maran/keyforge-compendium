@@ -1,0 +1,42 @@
+<% description "Use our aggregated data via our API for your own Keyforge projects." %>
+
+<section class="kfc__pagehead">
+  <h1><%= title "Keyforge Compendium API" %></h1>
+  <p>Use our aggregated data for your own Keyforge projects. Visit the <%= link_to "Keyforge Compendium API Documentation", apipie_apipie_path %>.</p>
+  <%= link_to "Add key", new_api_key_path, class: "btn btn-primary" %>
+</section>
+
+<div class="kfc__games">
+  <div class="row">
+    <div class="col-12">
+      <div class="alert alert-warning">
+        <p>Some basic rules when using the API:</p>
+        <ul>
+          <li>Don't spam the API endpoints or I will have to spend time coding up a rate limits and I don't want to do that.</li>
+          <li>If you use any of our unique content such as the FAQs or ADHD rating then please attribute https://keyforge-compendium.com</li>
+          <li>Please let me know what you built! I'm always eager to see what you can come up with :-)</li>
+        </ul>
+      </div>
+      <% if @api_keys.any? %>
+        <table class="table table-striped table-dark">
+          <thead class="thead-dark">
+            <tr>
+              <th>Name</th>
+              <th>Username (key)</th>
+              <th>Password (secret)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @api_keys.order(created_at: :desc).each do |c| %>
+              <tr>
+                <td><%= c.name %></td>
+                <td><%= c.key %></td>
+                <td><%= c.secret %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+    </div>
+  </div>
+</div>

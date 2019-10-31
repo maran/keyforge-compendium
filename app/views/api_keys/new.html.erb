@@ -1,0 +1,11 @@
+<div class="kfc__games">
+  <div class="row">
+    <div class="col-12">
+      <h1>Add API Key</h1>
+      <%= simple_form_for @api_key do |f| %>
+        <%= f.input :name, placeholder: "My awesome Keyforge Bot" %>
+        <%= f.submit "Create", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+</div>

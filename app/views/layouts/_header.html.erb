@@ -1,0 +1,44 @@
+<header class="kfc-header">
+  <div class="kfc-header__account">
+    <%= link_to "Donate with Patreon", "https://www.patreon.com/keyforgecompendium", alt: "Donate", class: "donate", target: "_blank" %>
+    <%= link_to "https://twitter.com/KeyforgeComp", style: "float: left", target: "_BLANK" do %>
+      <%=fa_icon "twitter" %>
+    <% end %>
+    <%= link_to "https://discord.gg/KsWVC6Y", style: "float: left" do %>
+      <%= image_tag "Discord-Logo-White.svg", size: "17" %>
+    <% end %>
+
+    <%#= link_to "Warning: MasterVault is mixing AoA cards into CotA decks, please refresh your decks if you had weird results.", set_cards_path("2-aoa"), class: "float-left" %>
+
+    <% if current_user.present? %>
+      <%= link_to "Sign out", destroy_user_session_path, method: :delete, class: "account-link" %>
+      <%= active_link_to "API", api_keys_path,  class: "account-link" %>
+      <%= active_link_to "Messages", "/conversations", alt: "Conversations", class: "account-link" %>
+      <%= active_link_to "Settings", edit_user_registration_path, alt: "Edit account settings", class: "account-link" %>
+    <% else %>
+      <%= link_to "Log in", new_user_session_path, class: "account-link" %>
+      <%= link_to "Register", new_user_registration_path, class: "account-link" %>
+    <% end %>
+  </div>
+
+  <div class="kfc-header__browse">
+    <span class="js-mobile-toggle mobile-menu">
+      <i class="fa fa-bars"></i>
+    </span>
+
+    <a href="/" alt="Keyforge Compendium" class="logo">
+      <%= image_tag "kf-logo-dk.svg", alt: "Keyforge Compendium Logo" %>
+    </a>
+
+    <nav class="js-nav">
+      <%= active_link_to "Cards", "/", alt: "Card List", active: :exact %>
+      <%= active_link_to "Decks", "/decks", alt: "Deck List", active: :exact %>
+      <%= active_link_to "Stats", "/stats", alt: "Statistics" %>
+      <%= active_link_to "Rules", "/rules", alt: "Rules" %>
+      <%= active_link_to "FAQS", "/faqs", alt: "Frequently Asked Questions" %>
+      <%= active_link_to "Import Deck", "/decks/new", alt: "Import Deck", active: :exact %>
+      <%= active_link_to "My Decks", "/decks_users", alt: "My Decks", class: "account-link" %>
+      <%= active_link_to "My Games", "/games", alt: "My Games", class: "account-link" %>
+    </nav>
+  </div>
+</header>

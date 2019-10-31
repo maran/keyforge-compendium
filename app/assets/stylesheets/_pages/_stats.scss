@@ -1,0 +1,40 @@
+&__stats {
+  clear:both;
+  width:100%;
+  margin: 0 auto;
+  max-width: $max-width;
+
+  &__table {
+    width:100%;
+    margin:0 0 3rem;
+
+    h2 {
+      font-size:1.6rem;
+      text-align:center;
+      width:100%;
+      float:left;
+      font-weight:400;
+    }
+  }
+  
+  @include breakpoint(sm) {
+    display:flex;
+
+    &__table {
+      flex:1;
+
+      h2 {
+        font-size:2rem;
+        font-weight:600;
+      }
+
+      &:last-child {
+        margin: 0 0 0 1rem;
+      }
+
+      &:first-child {
+        margin: 0 1rem 0 0;
+      }
+    }
+  }
+}

@@ -1,0 +1,85 @@
+<section class="kfc__pagehead">
+  <h2><%= title "My favourite decks" %></h2>
+  <% if current_user.favourites_public? %>
+    <p>Your decks are public, you can use this URL to show them off: <%= link_to fav_deck_url(current_user), fav_deck_url(current_user) %>.</p>
+    <% unless current_user.username.present? %>
+      <p>If you setup a username <%= link_to "on your profile", edit_user_registration_path %> you can use that instead of the id.</p>
+    <% end %>
+  <% else %>
+    <p>These are your favourite decks, if you want to show them off you can enable public access by <%= link_to "flagging your favourites as public", edit_user_registration_path %>.</p>
+  <% end %>
+
+  <%= link_to "New favourite deck", new_decks_user_path, class: "btn btn-primary" %>
+  or
+  <%= link_to "Manage categories", categories_path, class: "btn btn-secondary" %>
+</section>
+<div class="kfc__games">
+  <div class="btn-group float-right" role="group">
+  </div>
+  <% unless @deck_users.any? %>
+    <div class="col">
+      <div class="alert alert-primary">
+        <h4 class="alert-heading">No favourite decks yet</h4>
+        <p>It seems you have no favourite decks yet, why don't you go favourite some decks now? Just search for your decks and press the 'heart' icon on the top left. Alternatively press the big button on the top right.</p>
+      </div>
+    </div>
+  <% else %>
+    <div class="col">
+      <table class="table table-responsive-sm table-dark" id="favDecks">
+        <thead class="thead-dark">
+          <th>Title</th>
+          <th>Houses</th>
+          <th>Consistency</th>
+          <th>Win rate</th>
+          <th>Matches played</th>
+          <th>Category</th>
+          <th>&nbsp;</th>
+        </thead>
+        <tbody>
+          <% @deck_users.each do |deck| %>
+            <tr>
+              <td><%= link_to deck.name, decks_user_path(deck.id) %></td>
+              <td><%=raw display_house_icons(deck.deck) %></td>
+              <td><%= deck.deck.consistency_rating.round(3) %></td>
+              <td><%= current_user.win_rate(deck.deck.id) %>%</td>
+              <td><%= current_user.games_played_with_deck(deck.deck.id) %></td>
+              <td><%= deck.category.present? ? deck.category.name : ""%></td>
+              <td>
+                <%= edit_path edit_decks_user_path(deck) %>
+                <%= delete_path(decks_user_path(deck), "favourite")%>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</div>
+
+<% if @virtual_decks.any? %>
+  <div class="row">
+    <div class="col">
+      <h2>Unregistered Decks</h2>
+      <table class="table table-responsive-sm table-dark">
+        <thead class="thead-dark">
+          <th>Name</th>
+          <th>Status</th>
+          <th colspan=3>Actions</th>
+        </thead>
+        <tbody>
+          <% @virtual_decks.each do |v| %>
+            <tr>
+              <td><%= v.deck_name %></td>
+              <td><%= virtual_deck_link(v) %></td>
+              <td><%= edit_path(edit_virtual_deck_path(v))%>
+              <% unless v.added? %>
+                <%= delete_path(virtual_deck_path(v), "Deck")%>
+              <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+  </div>

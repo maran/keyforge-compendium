@@ -1,0 +1,21 @@
+&__import {
+  text-align:center;
+  float:left;
+  width:100%;
+  
+  form {
+    display:flex;
+    max-width: 40rem;
+    margin:0 auto;
+    overflow:hidden;
+    
+    input[type="text"] {
+      border-radius:.2rem 0 0 .2rem;
+    }
+    
+    input[type="submit"] {
+      border-radius:0 .2rem .2rem 0;
+      float:left;
+    }
+  }
+}

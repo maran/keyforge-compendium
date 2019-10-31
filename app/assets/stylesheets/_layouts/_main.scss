@@ -1,0 +1,40 @@
+.kfc {
+  padding:3rem 2rem 2rem;
+  float:left;
+  width:100%;
+  position:relative;
+  z-index:2;
+  min-height: calc(100vh - 15.2rem);
+  background:$background;
+
+  @import "_components/form",
+          "_components/headings",
+          "_components/buttons",
+          "_components/search",
+          "_components/deckcard",
+          "_components/card";
+
+  @import "_pages/card-list",
+          "_pages/cardshow",
+          "_pages/decks",
+          "_pages/deck-show",
+          "_pages/compare",
+          "_pages/stats",
+          "_pages/import",
+          "_pages/user",
+          "_pages/rules",
+          "_pages/blog",
+          "_pages/games",
+          "_pages/faqs";
+
+  @include breakpoint(sm) {
+    padding: 3rem 3rem 3rem;
+  }
+
+  @include breakpoint(md) {
+    padding:4rem 5rem 5rem;
+    min-height: calc(100vh - 17.2rem);
+  }
+}
+
+@import "_components/alerts";

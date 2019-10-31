@@ -1,0 +1,7 @@
+<div class="row card-row" data-original-title='<%= image_tag(c.front_image) %>' data-html="true" data-container="body" data-toggle="tooltip" data-placement="bottom">
+  <div class="col-1 text-center power-column card-column" style=""><%= c.power.to_i > 0 ? c.power : '' %></div>
+  <div class="col-1 text-center card-column armor-column"><%= c.armor.to_i > 0 ? c.armor : '' %></div>
+  <div class="col card-column"><%= c.title %></div>
+  <div class="col-1 text-center card-column amber-column"><%= c.amber %></div>
+  <div class="col-1 text-center card-column house-column"><%= image_tag "#{c.a_house.name.downcase}.png", class: "img-fluid"%></div>
+</div>

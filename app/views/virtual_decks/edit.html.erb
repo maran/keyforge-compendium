@@ -1,0 +1,33 @@
+<%= simple_form_for @virtual_deck do |f| %>
+  <div class="row">
+    <div class="col-12">
+      <%= f.input :deck_name, class: "form-input" %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-md-3">
+      <%= image_tag @virtual_deck.image, class: "img-fluid", style: "height: 600px" %>
+    </div>
+    <% @virtual_deck.cards.keys.each do |k| %>
+      <div class="col-12 col-md-3">
+        <h1><%= House.find(k).name %></h1>
+        <ul>
+          <%@virtual_deck.cards[k].each do |c| %>
+            <li><%= select_tag "virtual_deck[cards[#{k}]][]", options_for_select(@card_selects[k],c),{class: "mb-2 select2n", style: "width: 100%", "data-placeholder": "Select card"} %></li>
+          <% end %>
+          <% (12-@virtual_deck.cards[k].length).times do %>
+            <li><%= select_tag "virtual_deck[cards[#{k}]][]", options_for_select(@card_selects[k],nil),{class: "mb-2 select2n", style: "width: 100%", "data-placeholder": "Select card"} %></li>
+          <% end %>
+          </ol>
+      </div>
+    <% end %>
+  </div>
+  <% if @virtual_deck.has_similar_name? %>
+     <p>It appears there is already a deck present with a name very similar to this one, please contact us if you feel this is an error.</p>
+  <% elsif !@virtual_deck.all_cards_present? %>
+    <p>You can finalise your deck and submit it for import once you have checked and confirmed all the cards and if there is no deck with the same name already present in the database.</p>
+  <% else %>
+    <%= f.input :ready_for_import, hint: "This will flag it as ready for import, an admin will double check it before importing it."  %>
+  <% end %>
+  <%= f.submit "Update deck", class: "btn btn-primary" %>
+<% end %>

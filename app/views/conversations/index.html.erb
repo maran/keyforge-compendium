@@ -1,0 +1,37 @@
+<h1>Conversations</h1>
+<p>Conversations let you contact other players that are offering decks up for trade or sell. You can start a conversation by finding a deck that's flagged as for sale/trade and pressing the contact button on the left.</p>
+<table class="table table-striped table-dark">
+  <thead class="thead-dark">
+    <tr>
+      <th></th>
+      <th>Subject</th>
+      <th>Deck</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% if current_user.conversations.any? %>
+      <tr>
+        <td colspan=4>Outgoing conversations</td>
+      </tr>
+    <% end %>
+    <% current_user.conversations.each do |c| %>
+      <tr>
+        <td><%= link_to "Read", conversation_path(c), class: "btn btn-primary" %></td>
+        <td><%= c.subject %></td>
+        <td><%= link_to c.deck.name, deck_path(c.deck.uuid) %></td>
+      </tr>
+    <% end %>
+    <% if Conversation.where(receiving_user_id: current_user.id).any? %>
+      <tr>
+        <td colspan=4>Incoming conversations</td>
+      </tr>
+    <% end %>
+    <% Conversation.where(receiving_user_id: current_user.id).each do |c| %>
+      <tr>
+        <td><%= link_to "Read", conversation_path(c), class: "btn btn-primary" %></td>
+        <td><%= c.subject %></td>
+        <td><%= link_to c.deck.name, deck_path(c.deck.uuid) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  winner_deck_id: 1
+  loser_deck_id: 1
+  winning_player_id: 
+  losing_player_id: 
+  played_at: 2018-12-03 11:18:31
+
+two:
+  user: two
+  winner_deck_id: 1
+  loser_deck_id: 1
+  winning_player_id: 
+  losing_player_id: 
+  played_at: 2018-12-03 11:18:31

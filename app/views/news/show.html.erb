@@ -1,0 +1,25 @@
+<% des = @page.meta_description if @page.meta_description %>
+
+<% description des %>
+
+<% set_meta_tags og: {type: "article", title: @page.title, image: Card.first.front_image, site_name:  "Keyforge Compendium", description: des, url: news_path(@page.id) } %>
+<% set_meta_tags twitter: {card: "summary", title: @page.title, image: Card.first.front_image, site_name:  "Keyforge Compendium", description: des, url: news_path(@page.id)} %>
+<% set_meta_tags canonical: news_path(@page.id) %>
+
+<section class="kfc__pagehead">
+  <h1><%= title @page.title %></h1>
+  <p>Posted on <%= @page.created_at %> by Gad</p>
+  <% if has_filters(params) %>
+    <button data-toggle="collapse" href="#filterList" class="btn btn-primary">Show filters</button>
+  <% end %>
+</section>
+
+<section class="kfc__blog">
+    <div class="kfc__blog__list">
+      <div class="entry">
+        <div class="blog-post-body">
+          <%=raw Kramdown::Document.new(@page.content.gsub("#ENDINTRO#","")).to_html %>
+        </div>
+      </div>
+  </div>
+</section>

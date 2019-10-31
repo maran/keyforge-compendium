@@ -1,0 +1,27 @@
+&__compare {
+  margin:0 auto;
+  overflow:hidden;
+  max-width:$max-width;
+  clear:both;
+
+  table {
+    text-align:center;
+
+    td, th {
+      white-space: nowrap;
+    
+      &.th-deck {
+        width:35%;
+      }
+
+      &.bg-danger {
+        font-size:1.4rem;
+      }
+
+      &.bg-success {
+        font-size:1.6rem;
+        font-weight:bold;
+      }
+    }
+  }
+}

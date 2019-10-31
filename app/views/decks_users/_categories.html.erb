@@ -1,0 +1,25 @@
+<span id="categoriesOverview">
+  <% if current_user.categories.any? %>
+    <div class="row">
+      <div class="col-9">
+        <%= f.input :category_id, as: :select, collection: current_user.categories %>
+      </div>
+      <div class="col-3">
+        <div class="form-group select optional">
+          <label class="form-control-label select optional">&nbsp;</label>
+
+          <%= link_to "New Category", "#newCategory", class: "btn btn-success form-control",  "data-toggle": "collapse" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</span>
+
+<span class="<%= current_user.categories.any? ? 'collapse' : '' %>" id="newCategory">
+  <%= f.fields_for :category do |ff| %>
+    <%= ff.input :name, placeholder: "Category name", label: "Category", disabled: current_user.categories.any? %>
+  <% end %>
+</span>
+
+<%= f.input :notes %>
+<%= f.input :reason, collection: DecksUser.reasons %>

@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  deck: one
+  raw_text: MyText
+  deck_name: MyString
+  cards: MyText
+
+two:
+  user: two
+  deck: two
+  raw_text: MyText
+  deck_name: MyString
+  cards: MyText

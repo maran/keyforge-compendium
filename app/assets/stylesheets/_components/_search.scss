@@ -1,0 +1,171 @@
+.csearch {
+  width:100%;
+  overflow:hidden;
+  margin:0 auto;
+  padding:0;
+  position:relative;
+  max-width:$max-width;
+
+  &.search-active {
+    .toggle-filters {
+      background:rgba($background, .2);
+    }
+
+    .csearch__formwrap {
+      display:block;
+    }
+  }
+
+  &__toggle {
+    display:block;
+    background:$navigation;
+    height:5rem;
+    margin:0 0 .5rem;
+
+    .result {
+      line-height: 5rem;
+      float:left;
+      padding-left: 1.5rem;
+    }
+
+    .toggle-filters {
+      width: 5rem;
+      height: 5rem;
+      float: right;
+      text-align: center;
+      margin: 0;
+      cursor: pointer;
+      line-height: 5rem;
+      transition: .2s background;
+      border:0;
+      border-left:1px dashed darken($navigation, 5%);
+
+
+      &:hover {
+        background: darken($navigation, 5%);
+      }
+    }
+  }
+
+  &__formwrap {
+    width: 100%;
+    display:none;
+    overflow:hidden;
+    margin:1rem 0 .5rem;
+  }
+
+  &__inpwrap {
+    width:100%;
+    margin:0 1rem 1rem 0;
+    float:left;
+
+    &:last-child {
+      border:none;
+      margin:0 0 1rem;
+    }
+
+    input {
+      width:100%;
+      color:#FFF;
+      border:0;
+      transition:.2s all;
+      font-weight:600;
+    }
+  }
+
+  &__search {
+    float:left;
+    width:100%;
+
+    &__results {
+      float:left;
+      color:#FFF;
+      line-height:4rem;
+    }
+
+    input {
+      float:right;
+      width: 100%;
+    }
+  }
+
+  @include breakpoint(xs) {
+    margin:0 auto 2.5rem;
+
+    &__toggle {
+      display:none;
+    }
+
+    &__formwrap {
+      display:block;
+      margin-left: -.5rem;
+      width: calc(100% + 1rem);
+      margin:0;
+    }
+
+    &__inpwrap {
+      margin:0 0 1rem 0;
+      width: calc(50% - 1rem);
+
+      &:nth-child(odd) {
+        margin-right: .5rem;
+      }
+
+      &:nth-child(even) {
+        margin-left: .5rem;
+      }
+    }
+
+    &__search {
+      margin-right:.5rem;
+      padding:0 1rem;
+
+      input {
+        width: auto;
+      }
+    }
+  }
+
+  @include breakpoint(md) {
+    &__formwrap {
+      margin:0 auto;
+      width:100%
+    }
+
+    &__inpwrap {
+      flex:1;
+      width:auto;
+      margin:0 0 1rem;
+      width:calc(33.3333% - 1rem);
+
+      &:nth-child(1),
+      &:nth-child(2),
+      &:nth-child(4),
+      &:nth-child(7),
+      &:nth-child(8),
+      &:nth-child(10),  {
+        margin: 0 1rem 1rem 0;
+      }
+
+      &:nth-child(3),
+      &:nth-child(6),
+      &:nth-child(9),
+      &:nth-child(12) {
+        margin-left:0 0 1rem 1rem;
+      }
+    }
+
+    &__search {
+      margin:0;
+      float:left;
+      input {
+        border:none;
+      }
+    }
+  }
+}
+
+#collapseSearch {
+  width:100%;
+  float:left;
+}

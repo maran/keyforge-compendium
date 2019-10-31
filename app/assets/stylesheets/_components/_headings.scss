@@ -1,0 +1,100 @@
+&__pagehead {
+  width:100%;
+  float:left;
+  margin:0;
+  overflow:hidden;
+  text-align:center;
+  margin:0 0 2rem;
+
+  a.btn {
+    display:inline-block;
+    width:100%;
+    height: 4rem;
+    line-height: 4rem;
+  }
+
+  .card-tags {
+    display: inline-block;
+    margin: -1rem 0 3rem;
+    float: left;
+    width: 100%;
+  }
+
+  h1,h2,h3,h4 {
+    margin:0 0 2rem;
+    text-align:center;
+    position:relative;
+
+    &:after {
+      display:none;
+    }
+  }
+
+  p {
+    display:none;
+  }
+
+  &__form {
+    text-align: center;
+    max-width: 50rem;
+    width: 100%;
+    margin: 2rem auto 0;
+    overflow: hidden;
+    clear: both;
+    display: flex;
+
+    input[type="text"] {
+      border-radius:.2rem 0 0 .2rem;
+    }
+
+    input[type="submit"] {
+      border-radius:0 .2rem .2rem 0;
+    }
+}
+
+  @include breakpoint(xs) {
+    a.btn {
+      width: auto;
+    }
+  }
+
+  @include breakpoint(sm) {
+    margin:0 0 3rem;
+
+    h1,h2,h3,h4 {
+      text-align:center;
+      margin:0 0 1rem;
+      float:left;
+      font-weight:300;
+      width:100%;
+      padding:0 0 1rem;
+
+      &:after {
+        content:'';
+        display:block;
+        position:absolute;
+        left: 50%;
+        bottom:0rem;
+        transform: translateX(-50%);
+        width:4rem;
+        height: .2rem;
+        background:$primary;
+      }
+    }
+
+    .card-tags {
+      margin: 0 0 1rem;
+    }
+
+    p {
+      float:left;
+      width:100%;
+      font-size:1.4rem;
+      margin:0 0 2rem;
+      overflow:hidden;
+      text-align:center;
+      padding:0 30%;
+      display:block;
+    }
+  }
+}

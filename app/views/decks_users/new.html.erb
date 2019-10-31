@@ -1,0 +1,16 @@
+<div class="row">
+  <h1><%= title "New favourite deck" %></h1>
+</div>
+<%= simple_form_for @deck_user, html:  { class: 'form-horizontal' } do |f| %>
+    <%= f.hidden_field :deck_id %>
+      <label class="mb-2">Deck:</label>
+    <% if f.object.deck_id.present? %>
+      <%= f.object.deck.name %>
+    <% else %>
+      <%= f.autocomplete_field :deck, autocomplete_deck_name_decks_path, "min-length": 5, :id_element => '#decks_user_deck_id', placeholder: "Start typing for the deck name",class: "mb-2 form-control" %>
+    <% end %>
+
+    <%= render partial: "/decks_users/categories", locals: {f: f} %>
+
+    <%= f.submit "Store favourite deck", class: "btn btn-primary" %>
+<% end %>

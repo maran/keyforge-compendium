@@ -1,0 +1,37 @@
+<h1><%= @deck.name %></h1>
+<% title "Deck Analysis for #{@deck.name}" %>
+<% des = "Discover the strengths and weaknesses of the Keyforge deck #{@deck.name}" %>
+<% description des %>
+<% set_meta_tags og: {type: "article", title: @deck.name, image: @deck.cards.first.front_image, site_name:  "Keyforge Compendium", description: des, url: request.original_url} %>
+<% set_meta_tags twitter: {card: "summary", title: @deck.name, image: @deck.cards.first.front_image, site_name:  "Keyforge Compendium", description: des, url: request.original_url} %>
+<div class="row">
+  <div class="col-12 col-md-3">
+    <h5>Tags</h5>
+    <% @tags.each do |t| %>
+      <div class="row">
+        <div class="form-check">
+          <%= check_box_tag "tags", t.id, should_show_tag(t), class: "tagsSelector", id: "cardTag-#{t.id}" %>
+          <label for="cardTag-<%=t.id%>"><%= t.name %> (<%=t.virtual_count %>)</label>
+        </div>
+      </div>
+    <% end %>
+    <%= link_to "Check all", "#", id: "checkAllTags" %> | <%= link_to "Uncheck all", "#", id: "uncheckAllTags" %>
+  </div>
+  <div class="col-12 col-md-9">
+    <div class="row">
+      <% @tags.each do |t| %>
+        <div class="col-lg-4 col-md-6 col-12 mb-4" id="tagCollection-<%=t.id%>" style="<%= should_show_tag(t) ? '' : 'display: none'%>">
+          <h5>
+            <%= t.name %> (<%= t.virtual_count %>)
+            <%= fa_icon "question", "data-toggle" => "tooltip", "data-original-title" => "#{t.description}", class: "float-right"  %>
+          </h5>
+          <% t.virtual_cards.sort{|x,y| y.power <=> x.power}.each do |c| %>
+            <% c.amount.times do %>
+              <%= render partial: "/cards/pretty_card", locals: {c: c} %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+.ui-autocomplete {
+  position: absolute;
+  top: calc(100% + 1rem);
+  left: 0;
+  z-index: 1000;
+  float: left;
+  display: none;
+  min-width: 160px;
+  padding: 1rem 0 0;
+  margin: 0 0 1rem 2.5rem;
+  list-style: none;
+  font-weight:600;
+  border-radius: .2rem;
+  padding:1rem 0 0;
+}
+
+.ui-menu-item > div {
+  padding:.5rem 1rem;
+  line-height: 3rem;
+  font-weight:500;
+  background: $secondary;
+  transition:.2s all;
+  font-weight:600;
+  cursor:pointer;
+
+  &:hover {
+    background:darken($secondary, 2%);
+  }
+}
+
+.ul-menu-item:last-child {
+  div {
+    border-bottom: 1rem solid $background;
+  }
+}
+
+.ui-helper-hidden-accessible {
+  display:none !Important;
+}
+
+.ui-state-hover, .ui-state-active {
+  background:darken($secondary, 2%);
+  color:#FFF;
+}

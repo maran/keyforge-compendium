@@ -1,0 +1,28 @@
+<% description "Keep up with the latest and greatest news regarding Keyforge Compendium and the game itself." %>
+
+<section class="kfc__pagehead">
+  <h1><%= title "Latest News" %></h1>
+  <p>Keep up with the latest and greatest news regarding Keyforge Compendium and the game itself.</p>
+  <% if has_filters(params) %>
+    <button data-toggle="collapse" href="#filterList" class="btn btn-primary">Show filters</button>
+  <% end %>
+</section>
+
+<section class="kfc__blog">
+    <div class="kfc__blog__list">
+        <% @pages.each do |page| %>
+          <div class="entry">
+            <h5><%=link_to page.title, news_path(page.slug) %></h5>
+            <div class="blog-post-body">
+              <%=raw Kramdown::Document.new(page.content.split("#ENDINTRO#")[0]).to_html %>
+              <%= link_to "Read on", news_path(page.slug), class: "btn btn-secondary mb-2" %>
+              <ul class="entry__info">
+                <li>
+                  Posted on <%= page.created_at %> by Gad
+                </li>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+    </div>
+</section>

@@ -1,0 +1,21 @@
+<h1>Conversation "<%= @conversation.subject %>"</h1>
+<p class="text-muted">About deck <%= @conversation.deck.name %></p>
+<div class="clearfix mb-4">
+  <% @conversation.messages.each do |message| %>
+    <div class="card mt-4 col-9 <%= align_class(message) %>">
+      <div class="card-body">
+        <h6 class="card-subtitle mb-2 text-muted">#<%= message.user.id %> said on <%=l message.created_at %></h6>
+        <%= message.body %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div class="row">
+  <div class="col-6">
+    <h1>New message</h1>
+    <%= simple_form_for [@conversation, @conversation.messages.build] do |f|%>
+      <%=f.input :body %>
+      <%=f.submit "Send message", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

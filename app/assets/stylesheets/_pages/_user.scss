@@ -1,0 +1,49 @@
+&__user {
+  max-width: 40rem;
+  margin:0 auto;
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px $secondary inset;
+    -webkit-text-fill-color: white !important;
+  }
+
+  input[type="email"],
+  input[type="password"] {
+    border-radius:0 !important;
+  }
+
+  input[type="submit"] {
+    width:100%;
+  }
+
+  .form-remember {
+    text-align:center;
+    margin:1rem auto 2rem;
+
+    input {
+      transform: translateX(-.5rem);
+      margin-top: 4px;
+    }
+  }
+
+  .form-links {
+    display:inline-block;
+    text-align:center;
+    width:100%;
+
+    a {
+      margin:0 1rem 0 0;
+      padding:0 1rem 0 0;
+      border-right:1px solid $border; 
+
+      &:last-child {
+        border:none;
+        margin:0;
+        padding:0;
+      }
+    }
+  }
+}

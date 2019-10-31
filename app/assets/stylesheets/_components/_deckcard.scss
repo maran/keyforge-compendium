@@ -1,0 +1,153 @@
+.deck-card {
+  width: 100%;
+  overflow: hidden;
+  float: left;
+  margin: 0 0 2rem;
+  background-image: image-url('deck-bg.png');
+  background-color: rgba(73, 85, 107, 0.25);
+  background-position:center;
+  background-size: cover;
+  background-repeat:no-repeat;
+
+  &__house {
+    text-align: center;
+    float: left;
+    width: 100%;
+
+    .hn-b {
+      width: 33.3333%;
+      float: left;
+      height: .2rem;
+    }
+
+    .hn-t {
+      margin: 2rem 0 0;
+      padding: 0 1rem;
+      display: inline-block;
+      position: relative;
+      text-transform: uppercase;
+      color: $text-muted;
+      font-weight: 700;
+      letter-spacing: .1rem;
+      font-size: 1.2rem;
+
+      &:after {
+        content: '';
+        height: .4rem;
+        width: .4rem;
+        border-radius: .4rem;
+        position: absolute;
+        margin-top: -.2rem;
+        right: -.2rem;
+        top: 50%;
+        background: $text-muted;
+      }
+
+      &:last-child {
+        &:after {
+          display: none;
+        }
+      }
+    }
+  }
+
+  h1 {
+    font-size: 1.7rem;
+    text-align: center;
+    float: left;
+    width: 100%;
+    line-height: 2.4rem;
+    margin: 0 0 .5rem;
+    padding:0 2rem;
+  }
+
+  span.alert-forsale {
+    font-size: 1.2rem;
+    color:#FFF;
+    text-align: center;
+    float: left;
+    width:100%;
+    transform: translateY(-1.5rem);
+  }
+
+  &__raritys {
+    text-align: center;
+    margin: 0 0 1.5rem;
+    float: left;
+    width: 100%;
+    padding:0 3rem;
+
+    span {
+      display: inline-block;
+      margin: 0 .25rem;
+    }
+  }
+
+  &__ratings {
+    padding:0 3rem;
+    margin:0 0 2rem;
+    float:left;
+    width:100%;
+    display: flex;
+
+    &__sas,
+    &__consistency {
+      background:#171C24;
+      padding:1.2rem 0 1.5rem;
+      text-align:center;
+      text-transform: uppercase;
+      font-weight:bold;
+      color: rgba(255,255,255, .3);
+      box-shadow:0 0 1px rgba(0,0,0, .5);
+      letter-spacing:.1rem;
+      font-size:1.2rem;
+      flex:1;
+
+      span {
+        font-size:2rem;
+        color:#FFF;
+        float:left;
+        width:100%;
+        text-align:center;
+        line-height: 2.8rem;
+        letter-spacing:0;
+      }
+    }
+
+    &__sas {
+      border-radius: 0 .3rem .3rem 0;
+      border-left:1px solid rgba(255,255,255, .1);
+    }
+
+    &__consistency {
+      border-radius: .3rem 0 0 .3rem;
+      border-right:1px solid rgba(0,0,0, .5);
+    }
+  }
+
+  &__cards {
+    margin:0 0 2rem;
+    padding:0 3rem;
+    float:left;
+    width:100%;
+
+    li {
+      width: calc(50% - .5rem);
+      float: left;
+      margin:0 0 1rem .5rem;
+      background:#333B47;
+      border:1px solid #39414E;
+      border-radius: .2rem;
+      line-height: 4.5rem;
+      text-align:center;
+      list-style-type:none;
+      color:#D9DBDC;
+      font-size:1.5rem;
+
+      &:nth-child(odd) {
+        margin:0 .5rem 1rem 0;
+      }
+
+    }
+  }
+}

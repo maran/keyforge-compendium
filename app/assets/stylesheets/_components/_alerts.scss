@@ -1,0 +1,50 @@
+.alert {
+  float:left;
+  width:100%;
+  text-align: center;
+  font-weight: 700;
+  
+  &-info {
+    background: $info;
+    color:#FFF;
+    border:0;
+  }
+}
+
+.global-alert {
+  position: fixed;
+  line-height: 3rem;
+  background: $navigation;
+  color: #FFF;
+  padding: 0 1rem;
+  text-align: center;
+  border-radius: .2rem;
+  z-index: 9999;
+  font-size: 1.2rem;
+  left: 2rem;
+  bottom: 2rem;
+  font-weight: 700;
+  opacity: .8;
+}
+
+.scroll-top {
+  position: fixed;
+  line-height: 4rem;
+  width: 4rem;
+  background: $navigation;
+  color: #FFF;
+  padding: 0 1rem;
+  text-align: center;
+  border-radius: .2rem;
+  z-index: 9999;
+  font-size: 2.4rem;
+  right: 2rem;
+  bottom: 2rem;
+  text-align:center;
+  cursor:pointer;
+  transition:.2s background;
+
+  &:hover {
+    background: darken($navigation, 10%);
+  }
+}

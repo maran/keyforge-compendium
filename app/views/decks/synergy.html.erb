@@ -1,0 +1,44 @@
+<h1>Synergy Deck Debug</h1>
+<% @deck.cards.each do |c| %>
+  <% if c.synergies.any? %>
+    <h5><%= c.title %> Synergies</h5>
+    <table class="table table-dark table-hover">
+      <thead class="thead-dark">
+        <th></th>
+        <th>Card</th>
+        <th>Reason</th>
+        <th>Weight</th>
+        <th>Amount</th>
+        <th>Total rating</th>
+      </thead>
+      <tbody>
+        <% c.synergies.with_cards(@deck.normalised_card_ids).each do |s| %>
+          <tr>
+            <td class="text-center"><%= fa_icon "image", 'data-original-title' => image_tag(s.synergy_card.front_image), 'data-html' => true, 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-placement' => 'right' %></td>
+            <td><%= s.synergy_card.title %></td>
+            <td><%= s.synergy_reason.name %></td>
+            <td><%= s.weight %></td>
+            <td><%= @deck.card_count(s.synergy_card)  %></td>
+            <td><%= s.rating_for_deck(@deck)  %></td>
+          </tr>
+        <% end %>
+        <tr>
+          <th colspan=5>Sub Total</th>
+          <td>
+            <%= c.synergy_rating_for_deck(@deck) %>
+          </td>
+        </tr>
+        <tr>
+          <th colspan=5>Card base</th>
+          <td><%= c.base_score %></td>
+        </tr>
+        <tr>
+          <th colspan=5>Final score</th>
+          <td>
+            <%= c.synergy_rating_for_deck(@deck, true) %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  <% end %>
+<% end %>

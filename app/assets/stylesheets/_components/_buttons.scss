@@ -1,0 +1,69 @@
+.btn {
+  line-height: 4.5rem;
+  height: 4.5rem;
+  padding:0 1.5rem;
+  border:0;
+  border-radius:.2rem;
+  font-weight: 700;
+  font-size:1.4rem;
+
+  &-favourite {
+    background: none;
+    width: 4.5rem;
+    height: 4.5rem;
+
+    i {
+      font-size:2rem;
+      color:#FFF;
+      transition:.2s color;
+    }
+
+    &.active {
+      i {
+        color: $primary;
+      }
+    }
+  }
+
+  &-info {
+    background: $navigation;
+    &:hover {
+        background: darken($navigation, 5%);
+    }
+  }
+
+  &-primary {
+    background:$primary;
+
+    &:hover {
+        background: darken($primary, 5%);
+    }
+  }
+
+  &-secondary {
+    background: lighten($secondary, 10%);
+
+    &:hover {
+      background: lighten($secondary, 15%);
+    }
+  }
+
+  &-faq {
+    white-space: normal;
+    text-align:left;
+    border:0;
+    padding:0 1.5rem;
+
+    p {
+      margin:0;
+      font-weight:500;
+      line-height: 2.5rem;
+    }
+  }
+
+  &:focus,
+  &:active {
+    outline:none !important;
+    box-shadow:none !important;
+  }
+}

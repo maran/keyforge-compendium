@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  power_level: 1
+  chains: 1
+  wins: 1
+  losses: 1
+
+two:
+  power_level: 1
+  chains: 1
+  wins: 1
+  losses: 1

@@ -1,0 +1,2 @@
+module VirtualDecksHelper
+end

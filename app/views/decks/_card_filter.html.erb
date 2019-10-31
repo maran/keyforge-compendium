@@ -1,0 +1,21 @@
+<div class="bycards__item">
+  <% i = rand(10000) %>
+    <div class="bycards__item__select">
+      <% if should_show_mav(params) %>
+        <%= select_tag 'filterrific[with_card_ids][]card_id', options_for_select(Card.options_for_deck_filter, card_id),{class: "mb-2 select2n", style: "width: 100%", "data-placeholder": "Select required card"} %>
+      <% else %>
+        <%= select_tag 'filterrific[with_card_ids][]card_id', options_for_select(Card.options_for_deck_filter(false), card_id),{class: "mb-2 select2n", style: "width: 100%", "data-placeholder": "Select required card"} %>
+      <% end %>
+    </div>
+
+    <div class="bycards__item__selectsmall first-sml-select">
+      <%= select_tag("filterrific[with_card_ids][]card_type", options_for_select(Card.card_compare_types, card_type), {class: "select2", style: "width: 100%", "data-placeholder": "Card type", "data-allow-clear": false}) %>
+    </div>
+
+    <div class="bycards__item__selectsmall">
+      <%= select_tag("filterrific[with_card_ids][]card_count", options_for_select((1..9).to_a, card_count), {class: "select2", style: "width: 100%", "data-placeholder": "Card count", "data-allow-clear": false}) %>
+    </div>
+
+    <input type="button" class="btn btn-danger" id="removeCard" value="Remove Card">
+    <input type="button" class="btn btn-secondary addCard" id="addNewCard" value="Add Card">
+</div>

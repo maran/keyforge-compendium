@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  synergy_card: one
+  card: one
+  weight: 1
+  reason: one
+
+two:
+  synergy_card: two
+  card: two
+  weight: 1
+  reason: two

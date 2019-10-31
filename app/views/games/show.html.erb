@@ -1,0 +1,29 @@
+<% description "Game Overview of #{@game.winning_deck.name} vs #{@game.losing_deck.name}" %>
+
+<section class="kfc__pagehead">
+  <h1><%= title "Game Overview" %></h1>
+  <p><%= @game.winning_deck.name %> vs <%= @game.losing_deck.name %></p>
+  <%= link_to "Compare decks", compare_deck_path(@game.winning_deck.uuid, deck_id: @game.losing_deck.id), class: "btn btn-primary" %>
+</section>
+
+<div class="kfc__games">
+  <div class="kfc__games__overview kfcgo">
+    <h5 class="kfcgo--winner">
+      <%= link_to @game.winning_deck.name, deck_path(@game.winning_deck.uuid) %>
+      <span><%=raw display_house_icons(@game.winning_deck) %></span>
+    </h5>
+    <h5>vs</h5>
+    <h5 class="kfcgo--loser">
+      <%= link_to @game.losing_deck.name, deck_path(@game.losing_deck.uuid) %>
+      <span><%=raw display_house_icons(@game.losing_deck) %></span>
+    </h5>
+  </div>
+
+  <div class="kfc__games__notes">
+    <% if @game.notes.present? %>
+      <p><%= @game.notes %></p>
+    <% else %>
+      <p>No notes are registered for this game.</p>
+    <% end %>
+  </div>
+</div>

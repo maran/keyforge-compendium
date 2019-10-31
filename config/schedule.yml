@@ -1,0 +1,9 @@
+import_job:
+  cron: "16 */2 * * *"
+  class: "ScrapeDecksWorker"
+#update_card_count:
+#  cron: "1 */4 * * *"
+#  class: "StatsUpdaterWorker"
+#recalc_cache:
+#  cron: "30 06 */7 * *"
+#  class: "RecacheDeckScoreWorker"

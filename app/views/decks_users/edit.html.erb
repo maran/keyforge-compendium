@@ -1,0 +1,8 @@
+<div class="row">
+  <h1><%= title "Edit favourite deck" %></h1>
+</div>
+
+<%= simple_form_for @deck_user, html:  { class: 'form-horizontal' } do |f| %>
+  <%= render partial: "/decks_users/categories", locals: {f: f} %>
+  <%= f.submit "Update favourite deck", class: "btn btn-primary" %>
+<% end %>

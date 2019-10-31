@@ -1,0 +1,2 @@
+class ExpansionsController < ApplicationController
+end

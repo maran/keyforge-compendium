@@ -1,0 +1,45 @@
+.kfc-card {
+  width:100%;
+  border-radius:.3rem;
+  margin-bottom:0;
+
+  a {
+    overflow:hidden;
+
+    img {
+      float:left;
+      width:100%;
+      margin:0;
+      border-radius:1.5rem;
+      box-shadow:0 0 25px rgba(0,0,0, .2);
+    }
+  }
+
+  h5 {
+    text-align: center;
+    margin: 1rem 0 0;
+    float: left;
+    width: 100%;
+    font-weight:700;
+    font-size:1.2rem;
+  }
+
+  p {
+    color: rgba(255, 255, 255, .3);
+    margin: 0;
+    font-weight: 500;
+    font-size: 1rem;
+    float: left;
+    width: 100%;
+    text-align: center;
+  }
+
+  @include breakpoint(md) {
+    h5 {
+      font-size:1.4rem;
+    }
+    p {
+      font-size:1.2rem;
+    }
+  }
+}

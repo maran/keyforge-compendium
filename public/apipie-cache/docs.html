@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>API documentation</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link type='text/css' rel='stylesheet' href='./docs/stylesheets/bundled/bootstrap.min.css'/>
+<link type='text/css' rel='stylesheet' href='./docs/stylesheets/bundled/prettify.css'/>
+<link type='text/css' rel='stylesheet' href='./docs/stylesheets/bundled/bootstrap-responsive.min.css'/>
+  <link type='text/css' rel='stylesheet' href='./docs/stylesheets/application.css'/>
+  <!-- IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+    <script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row-fluid">
+      <div id='container'>
+        <ul class='breadcrumb'>
+  <li class='active'><a href='./docs/1.0.html'>Keyforge Compendium API 1.0</a></li>
+  
+</ul>
+
+<div>
+<p>The Keyforge Compendium API uses &#39;Basic Access Authentication&#39;
+where the key is the username and the secret is the password. Most
+libraries come with build in support for this if not you will have to built
+the header yourself.</p>
+</div>
+
+<h1 class='page-header'>Resources</h1>
+
+  <h2>
+    <a href='./docs/1.0/cards.html'>
+      Cards
+    </a>
+    <br>
+    <small>The cards API lets you lookup all individual cards.</small>
+  </h2>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Resource</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+          <tr>
+            <td>
+              <a href='./docs/1.0/cards/show.html'>GET /api/v1/cards/:id.json</a>
+            </td>
+            <td width='60%'>Show card details</td>
+          </tr>
+          <tr>
+            <td>
+              <a href='./docs/1.0/cards/show.html'>GET /api/v1/sets/:set_id/cards/:id.json</a>
+            </td>
+            <td width='60%'>Show card details for given set</td>
+          </tr>
+    </tbody>
+  </table>
+  <h2>
+    <a href='./docs/1.0/decks.html'>
+      Decks
+    </a>
+    <br>
+    <small>The decks API lets you lookup individual decks and their various properties such as ADHD and SAS ratings.</small>
+  </h2>
+  <table class='table'>
+    <thead>
+      <tr>
+        <th>Resource</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+          <tr>
+            <td>
+              <a href='./docs/1.0/decks/show.html'>GET /api/v1/decks/:id</a>
+            </td>
+            <td width='60%'>Show deck details</td>
+          </tr>
+          <tr>
+            <td>
+              <a href='./docs/1.0/decks/index.html'>GET /api/v1/decks</a>
+            </td>
+            <td width='60%'>List all decks</td>
+          </tr>
+          <tr>
+            <td>
+              <a href='./docs/1.0/decks/by_name.html'>GET /api/v1/decks/by_name/:name</a>
+            </td>
+            <td width='60%'>Search on decks by name</td>
+          </tr>
+          <tr>
+            <td>
+              <a href='./docs/1.0/decks/random.html'>GET /api/v1/decks/random/:amount</a>
+            </td>
+            <td width='60%'>Grab a few random deck IDs</td>
+          </tr>
+    </tbody>
+  </table>
+
+  
+
+        
+      </div>
+    </div>
+    <hr>
+    <footer>© 2018-2019 - keyforge-compendium.com</footer>
+  </div>
+  <script type='text/javascript' src='./docs/javascripts/bundled/jquery.js'></script>
+<script type='text/javascript' src='./docs/javascripts/bundled/bootstrap-collapse.js'></script>
+<script type='text/javascript' src='./docs/javascripts/bundled/prettify.js'></script>
+<script type='text/javascript' src='./docs/javascripts/apipie.js'></script>
+</body>
+</html>

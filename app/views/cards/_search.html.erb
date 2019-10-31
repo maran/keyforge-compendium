@@ -1,0 +1,84 @@
+<div class="csearch js-filters">
+  <div class="csearch__toggle">
+    <span class="result"><%= @cards.count %> Result(s)</span>
+    <span class="toggle-filters js-filter-toggle">
+      <i class="fa fa-search"></i>
+    </span>
+  </div>
+  <%= form_for_filterrific @filterrific do |f| %>
+  <div class="csearch__formwrap">
+    <div class="csearch__inpwrap">
+      <%= f.text_field(:search_title, placeholder: "Card Title") %>
+    </div>
+    <div class="csearch__inpwrap">
+      <%= f.text_field(:search_text, placeholder: "Card Text") %>
+    </div>
+    <div class="csearch__inpwrap">
+      <%= f.text_field(:with_traits, placeholder: "Card Traits") %>
+    </div>
+    <div class="csearch__inpwrap">
+      <%= f.number_field(:with_power, placeholder: "Minimum card power", min: 0) %>
+    </div>
+    <div class="csearch__inpwrap">
+      <%= f.number_field(:with_armor, placeholder: "Minimum card armor", min: 0) %>
+    </div>
+    <div class="csearch__inpwrap">
+      <%= f.select(
+        :type_like, @filterrific.select_options[:type_like],
+        {:include_blank => true},
+        class: 'select2',
+        style: 'width:100%;',
+        'data-placeholder': 'Select Type'
+      ) %>
+    </div>
+    <div class="csearch__inpwrap">
+      <%= f.select(
+        :house_like, @filterrific.select_options[:house_like],
+        {:include_blank => true},
+        class: 'select2',
+        style: 'width:100%;',
+        'data-placeholder': 'Select House'
+      ) %>
+    </div>
+    <div class="csearch__inpwrap">
+      <%= f.select(
+        :rarity_like, @filterrific.select_options[:rarity_like],
+        {:include_blank => true},
+        class: 'select2',
+        style: 'width:100%;',
+        'data-placeholder': 'Select Rarity'
+      ) %>
+    </div>
+    <div class="csearch__inpwrap">
+      <%= f.select(
+        :with_expansion, Expansion.all.collect{|x| [x.name, x.id]},
+        {:include_blank => true},
+        class: 'select2',
+        style: 'width:100%;',
+        'data-placeholder': 'Select Expansion'
+      ) %>
+    </div>
+    <div class="csearch__inpwrap">
+      <%= f.select(
+        :with_tags, Tag.all.collect{|x| [x.name, x.id]},
+        {:include_blank => true},
+        class: 'select2',
+        style: 'width:100%;',
+        'data-placeholder': 'Select Tag'
+      ) %>
+    </div>
+    <div class="csearch__inpwrap">
+      <%= f.select(
+        :sorted_by, @filterrific.select_options[:sorted_by],
+        {:include_blank => true},
+        class: 'select2',
+        style: 'width:100%;',
+        'data-placeholder': 'Sort By'
+      ) %>
+    </div>
+    <div class="csearch__search">
+      <%= f.submit 'Filter Results', class: "btn btn-secondary" %>
+    </div>
+  </div>
+  <% end %>
+</div>

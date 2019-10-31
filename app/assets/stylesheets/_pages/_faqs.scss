@@ -1,0 +1,129 @@
+&__faqs {
+  margin:3rem auto 0;
+  max-width:$max-width;
+
+  .faq-text {
+    p {
+      float: left;
+      width: 100%;
+      font-size: 1.4rem;
+      margin: 0 0 2rem;
+      overflow: hidden;
+      opacity: .6;
+      display: block;
+    }
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin:2rem 0;
+    text-align:center;
+    float: left;
+    width: 100%;
+  }
+
+  &__qa {
+    margin:0 0 2rem;
+
+    > a {
+      font-size: 2rem;
+      color: #FFF;
+      margin: 0 0 1rem;
+      float: left;
+      width: 100%;
+      font-weight: 700;
+    }
+
+    h5 {
+      font-size: 1.6rem;
+      cursor: pointer;
+      margin: 0 0 1rem;
+      padding: 1.5rem 7rem 1.5rem 2rem;
+      background: $secondary;
+      line-height: 1.5;
+      border-radius: .3rem;
+      transition:.2s background;
+      position:relative;
+      font-weight:600;
+      clear: both;
+
+      &:after {
+        content: "\f106";
+        font-family: FontAwesome;
+        color:#FFF;
+        position:absolute;
+        top:50%;
+        transform:translateY(-50%);
+        right:0;
+        width: 5rem;
+        text-align:center;
+      }
+
+      &.collapsed {
+        &:after {
+          content:"\f107";
+        }
+      }
+
+      &:hover {
+        background: lighten($secondary, 5%);
+      }
+    }
+
+    .answer {
+      margin:0 0 1rem;
+      background:$navigation;
+      font-size:1.6rem;
+      transition: all 0.6s;
+
+      > div {
+        padding: 1.5rem;
+        overflow: hidden;
+      }
+
+      p {
+        &:last-child {
+          margin:0;
+        }
+      }
+
+      &__info {
+        float:left;
+        width:100%;
+        padding:1rem 0 0 0;
+        margin:1rem 0 0 0;
+        border-top:1px dotted rgba(255,255,255, .1);
+        font-size:1.2rem;
+        overflow:hidden;
+        list-style-type:none;
+
+        li {
+          float:left;
+          width:100%;
+        }
+
+        a {
+          font-size:1.2rem;
+        }
+
+        @include breakpoint(xs) {
+          li {
+            width:auto;
+
+            &:last-child {
+              float:right;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @include breakpoint(sm) {
+    h2 {
+      font-size: 2.6rem;
+      font-weight:300;
+    }
+  }
+}

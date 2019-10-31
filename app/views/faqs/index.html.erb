@@ -1,0 +1,26 @@
+<% des = "Discover Keyforge frequently asked questions for all cards" %>
+<% description des %>
+<% set_meta_tags og: {type: "article", title: "Keyforge card FAQs", image: Card.first.front_image, site_name:  "Keyforge Compendium", description: des, url: faqs_url } %>
+<% set_meta_tags twitter: {card: "summary", title: "Keyforge card FAQs", image: Card.first.front_image, site_name:  "Keyforge Compendium", description: des, url: faqs_url } %>
+<% set_meta_tags canonical: faqs_url %>
+
+<section class="kfc__pagehead">
+  <% if @deck.present? %>
+    <h1><%= title "Frequently Asked Questions for cards in deck #{@deck.name}" %></h1>
+    <p>Below are a list of the most asked questions about individual KeyForge cards and their usage during play.</p>
+  <% else %>
+    <h1><%= title "Frequently Asked Questions for all cards" %></h1>
+    <p>Below are a list of the most asked questions about individual KeyForge cards and their usage during play.</p>
+  <% end %>
+</section>
+
+<div class="kfc__faqs">
+  <% @cards.each do |c| %>
+    <% if c.faqs.any? %>
+      <div id="accordion-card-<%= c.id %>" class="kfc__faqs__qa">
+        <%= card_link(c) %>
+        <%= render partial: "faqs/faq", collection: c.faqs, as: :f, locals: {c: c, parent: nil}, cached: true %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

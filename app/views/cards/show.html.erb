@@ -1,0 +1,65 @@
+<% des = @card.meta_description %>
+
+<% description des %>
+<% set_meta_tags og: {type: "article", title: @card.title, image: @card.front_image, site_name:  "Keyforge Compendium", description: des, url: request.original_url} %>
+<% set_meta_tags twitter: {card: "summary", title: @card.title, image: @card.front_image, site_name:  "Keyforge Compendium", description: des, url: request.original_url} %>
+<% set_meta_tags canonical: card_url(@card.slug) %>
+
+<section class="kfc__pagehead">
+  <h1><%= title @card.title %></h1>
+
+  <div class="card-tags">
+    <% @card.tags.each do |t| %>
+      <span class="badge badge-pill badge-info"><%= t.name %></span>
+    <% end %>
+  </div>
+</section>
+
+<div class="kfc__card">
+  <div class="kfc__card__image">
+    <%= image_tag @card.front_image, class: "card-img-top", alt: "Card image for #{@card.title}", title: "An image of the Keyforge card #{@card.title}"%>
+  </div>
+
+  <div class="kfc__card__info">
+    <ul>
+      <li><strong>Card Text</strong> <%=raw prettify_text(@card.text) %></li>
+      <li><strong>Type</strong> <%= @card.card_type %></li>
+      <li><strong>House</strong> <%= @card.a_house.name %></li>
+      <% if @card.traits.present? %>
+        <li><strong>Traits</strong> <%= @card.traits %></li>
+      <% end %>
+
+      <% if @card.amber.present? %>
+        <li><strong>Æmber</strong> <%= @card.amber %></li>
+      <% end %>
+      <% if @card.power.present? %>
+        <li><strong>Power</strong> <%= @card.power %></li>
+      <% end %>
+      <% if @card.armor.present? %>
+        <li><strong>Armor</strong> <%= @card.armor %></li>
+      <% end %>
+      <li><strong>Rarity</strong> <%=raw rarity_and_icon(@card) %></li>
+      <% if @card.artist.present? %>
+        <li><strong>Artist</strong> <%= @card.artist %></li>
+      <% end %>
+      <% if @card.flavor_text.present? %>
+        <li><strong>Flavor text</strong> <%= @card.flavor_text %></li>
+      <% end %>
+      <li><strong>Number</strong> <%= @card.number %></li>
+      <li><strong>Set</strong> <%= @card.expansion.name %></li>
+      <li><strong>In Decks</strong> <%= @card.cards_decks_count %> (<%= @card.percentage_present_decks %>%)</stron></li>
+      <li><strong>ADHD</strong> <%= ["a","b","c","e"].collect{|w| [w.upcase, @card.send("#{w}_weight")].join(': ')}.join(' / ') %></li>
+    </ul>
+  </div>
+</div>
+
+<% if @card.all_set_faqs.any? %>
+  <div class="kfc__faqs">
+    <h2>Questions & Answers</h2>
+    <div id="accordion">
+      <% @card.all_set_faqs.each do |f| %>
+        <%= render partial: "/faqs/faq", locals: {f: f, parent: "accordion"} %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,61 @@
+<% if @deck.present? && !@other_deck.present? %>
+  <section class="kfc__pagehead">
+    <h1><%= title "Compare Deck" %></h1>
+    <p><%= description "Select a deck to compare #{@deck.name} against" %></p>
+    <form action="" class="kfc__pagehead__form">
+      <%= hidden_field_tag "deck_id" %>
+      <%= autocomplete_field_tag "uuid-name", '',autocomplete_deck_name_decks_path, "min-length": 5, :id_element => '#deck_id', placeholder: "Start typing for the deck name",class: "mb-2 form-control" %>
+      <%= submit_tag "Compare", class: "btn btn-success" %>
+    </form>
+  </section>
+<% else %>
+  <section class="kfc__pagehead">
+    <h1><%= title "Compare Deck" %></h1>
+    <p><%= description "See how Keyforge deck '#{@deck.name}' and '#{@other_deck.name}' compare in rating and card types." %></p>
+  </section>
+  <div class="kfc__compare">
+    <div class="table-responsive">
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th style="width:15%">&nbsp;</th>
+            <th class="th-deck"><%= @deck.name %></th>
+            <th class="th-deck"><%= @other_deck.name %></th>
+            <th style="width:15%">Diff</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-active">
+            <th colspan=4">
+              ADHD
+            </th>
+          </tr>
+          <% Deck.full_adhd_values.each do |v| %>
+            <tr>
+              <th><%= v.titleize %></th>
+              <td class="<%= compare_class(@deck.get_rating(v), @other_deck.get_rating(v)) %>"><%= @deck.get_rating(v) %></td>
+              <td class="<%= compare_class(@other_deck.get_rating(v), @deck.get_rating(v)) %>"><%= @other_deck.get_rating(v) %></td>
+              <td ><%= (@deck.send("#{v}_rating") - @other_deck.send("#{v}_rating")).round(3) %></td>
+            </tr>
+          <% end %>
+
+          <tr class="table-active">
+            <th colspan=4">
+              Card types
+            </th>
+          </tr>
+
+          <% Card.card_types[1..-1].each do |t| %>
+            <tr>
+              <th><%= t[0]%>s</th>
+              <td class="<%= compare_class(@deck.cards.type_count_like(t), @other_deck.cards.type_count_like(t)) %>"><%= @deck.cards.type_count_like(t) %></td>
+              <td class="<%= compare_class(@other_deck.cards.type_count_like(t), @deck.cards.type_count_like(t)) %>"><%= @other_deck.cards.type_count_like(t) %></td>
+              <td><%= @deck.cards.type_count_like(t) - @other_deck.cards.type_count_like(t) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+<% end %>
+

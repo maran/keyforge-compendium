@@ -1,0 +1,22 @@
+<h1>Synergy Card Debug</h1>
+<% if @card.synergies.any? %>
+  <h5><%= @card.title %> Synergies</h5>
+  <table class="table table-dark table-hover">
+    <thead class="thead-dark">
+      <th></th>
+      <th>Card</th>
+      <th>Reason</th>
+      <th>Weight</th>
+    </thead>
+    <tbody>
+      <% @card.synergies.each do |s| %>
+        <tr>
+          <td class="text-center"><%= fa_icon "image", 'data-original-title' => image_tag(s.synergy_card.front_image), 'data-html' => true, 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-placement' => 'right' %></td>
+          <td><%= s.synergy_card.title %></td>
+          <td><%= s.synergy_reason.name %></td>
+          <td><%= s.weight %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

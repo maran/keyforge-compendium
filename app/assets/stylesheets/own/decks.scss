@@ -1,0 +1,10 @@
+// Place all the styles related to the decks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+i.active {
+  color: #182033;
+}
+
+td.bg-success, td.bg-danger, td.bg-primary {
+  color: white;
+}

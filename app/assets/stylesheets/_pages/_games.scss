@@ -1,0 +1,175 @@
+&__games {
+  width:100%;
+  max-width:$max-width;
+  margin:2rem auto 0;
+  overflow:hidden;
+
+  .table-games {
+    &--winner {
+      a { color:$success; }
+    }
+
+    &--looser {
+      a { color:$error; }
+    }
+
+    &--delete {
+      color:$error;
+      padding:0 .5rem;
+
+      i {
+        font-size:1.6rem;
+      }
+    }
+
+    &--view {
+      color:#FFF;
+      font-size:1.4rem;
+      font-weight:600;
+    }
+  }
+
+  &__overview {
+    &.kfcgo {
+      float:left;
+      width:100%;
+
+      h5 {
+        text-align:center;
+        float:left;
+        width:5rem;
+        span {
+          float:left;
+          width:100%;
+          text-align:center;
+          margin:1rem 0 0;
+
+          img {
+            display:inline-block;
+          }
+        }
+      }
+
+      .kfcgo--winner { 
+        a { color: $success; }
+        width:calc(50% - 2.5rem);
+      }
+      .kfcgo--loser {
+        a { color: $error; }
+        width:calc(50% - 2.5rem);
+      }
+    }
+  }
+
+  &__notes {
+    padding-top: 2rem;
+    margin-top: 2rem;
+    float:left;
+    width:100%;
+    border-top: 1px dashed $border;
+  }
+
+  &__form {
+    .btn-success {
+      width:100%;
+    }
+
+    .gform {
+      &__row {
+        display:block;
+        margin:0 0 1rem;
+        float:left;
+        width:100%;
+
+        label {
+          font-weight: bold;
+          color: #FFF;
+        }
+
+        &--playedat {
+          .datetime.form-group {
+            width:100%;
+            float:left;
+
+            .d-flex {
+              display:block !important;
+              .select2-container {
+                margin:0 0 1rem !important;
+                width:100%;
+              }
+            }
+          }
+        }
+
+        &--notes {
+          .game_notes {
+            float:left;
+            width:100%;
+          }
+        }
+
+        &__input {
+          width:100%;
+          margin:0 0 1rem;
+        }
+
+        .btn--toggledecks {
+          width:100%;
+        }
+      }
+    }
+
+    @include breakpoint(sm) {
+      .btn-success {
+        margin-right: .5rem;
+        width: auto;
+      }
+      
+      .gform {
+        &__row {
+          display: flex;
+
+          &__input {
+            flex: 1;
+            margin: 0 .5rem;
+          }
+
+          .btn--toggledecks {
+            flex: 1;
+            margin-left: .5rem;
+            align-self: flex-end;
+            margin: 0 .5rem .5rem;
+            max-width: 20rem;
+          }
+
+          &--playedat {
+            .datetime.form-group {
+              width: 100%;
+              float: left;
+
+              .d-flex {
+                display:flex !important;
+
+                .select2-container {
+                  flex:1;
+                  margin: 0px .5rem !important;
+                  width:auto;
+                }
+              }
+
+              label {
+                padding: 0 .5rem;
+              }
+            }
+          }
+
+          &--notes {
+            .game_notes {
+              padding: 0 .5rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

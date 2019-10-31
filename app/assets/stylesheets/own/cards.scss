@@ -1,0 +1,71 @@
+// Place all the styles related to the cards controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+//
+@import 'house_colors';
+.item-creature {
+  background: rgba(255,0,0,0.1);
+}
+.item-action{
+  background: rgba(0,255,0,0.1);
+}
+.item-artifact{
+  background: rgba(0,0,255,0.1);
+}
+.item-upgrade{
+  background: rgba(0,255,255,0.1);
+}
+.amount-column {
+  border: 1px solid #fafafa;
+  background-color: white;
+  color: black;
+}
+.card-row {
+  background-color: black;
+  border: 2px solid $background;
+  color: white;
+}
+.power-column {
+  background-color: #dc5158;
+}
+.house-column {
+  background-color: white;
+  border: 1px solid #fafafa;
+}
+.armor-column {
+  background-color: #7b737d;
+}
+.amber-column {
+  background-color: #f0b341;
+}
+.card-column {
+  padding: 5px;
+}
+
+.logos-bg {
+  background:$logos;
+}
+
+.mars-bg {
+  background:$mars;
+}
+
+.untamed-bg {
+  background:$untamed;
+}
+
+.shadows-bg {
+  background:$shadows;
+}
+
+.brobnar-bg {
+  background:$brobnar;
+}
+
+.dis-bg {
+  background:$dis;
+}
+
+.sanctum-bg {
+  background:$sanctum;
+}

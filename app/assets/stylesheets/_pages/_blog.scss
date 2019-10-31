@@ -1,0 +1,72 @@
+&__blog {
+  float:left;
+  width:100%;
+
+  &__list,
+  &__post {
+    overflow:hidden;
+    max-width:$max-width;
+    margin:0 auto;
+  }
+
+  h5 {
+    font-size: 1.6rem;
+    cursor: pointer;
+    margin: 0 0 1rem;
+    padding: 1.5rem 7rem 1.5rem 2rem;
+    background: $secondary;
+    line-height: 1.5;
+    border-radius: .3rem;
+    transition:.2s background;
+    position:relative;
+    font-weight:600;
+    clear: both;
+  }
+  .entry {
+    margin:0 0 1rem;
+    background:$navigation;
+    font-size:1.6rem;
+    transition: all 0.6s;
+
+    > div {
+      padding: 1.5rem;
+      overflow: hidden;
+    }
+
+    p {
+      &:last-child {
+        margin:0;
+      }
+    }
+
+    &__info {
+      float:left;
+      width:100%;
+      padding:1rem 0 0 0;
+      margin:1rem 0 0 0;
+      border-top:1px dotted rgba(255,255,255, .1);
+      font-size:1.2rem;
+      overflow:hidden;
+      list-style-type:none;
+
+      li {
+        float:left;
+        width:100%;
+      }
+
+      a {
+        font-size:1.2rem;
+      }
+
+      @include breakpoint(xs) {
+        li {
+          width:auto;
+
+          &:last-child {
+            float:right;
+          }
+        }
+      }
+    }
+  }
+}

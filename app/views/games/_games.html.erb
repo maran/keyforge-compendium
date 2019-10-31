@@ -1,0 +1,32 @@
+<div class="kfc__games">
+  <% if games.any? %>
+    <table class="table table-striped table-dark table-games" id="gamesTable">
+      <thead class="thead-dark">
+        <tr>
+          <th>Winner</th>
+          <th>Loser</th>
+          <th>Played at</th>
+          <th>&nbsp;</th>
+      </thead>
+      <tbody>
+        <% games.each do |game| %>
+          <tr>
+            <td class="table-games--winner"><%=link_to game.winning_deck.name, deck_path(game.winning_deck.uuid) %></td>
+            <td class="table-games--looser"><%=link_to game.losing_deck.name, deck_path(game.losing_deck.uuid) %></td>
+            <td data-sort="<%= game.played_at.strftime("%Y%m%d%H%M%s") %>"><%=l game.played_at, format: :short %></td>
+            <td>
+              <%= link_to game_path(game.id), class: "table-games--view" do %>
+                View Notes
+              <% end %>
+              <%= link_to game_path(game.id), method: :delete, class: "table-games--delete pull-right", data: {confirm: "Are you sure you want to delete this game?"} do %>
+                <%= fa_icon "trash" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <span class="alert alert-info">It seems you have not registered any games yet. Why don't you  <%= link_to "create one now", new_game_path %>.</span>
+  <% end %>
+</div>

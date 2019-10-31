@@ -1,0 +1,7 @@
+h1 {
+  font-size:2rem;
+
+  @include breakpoint(sm) {
+    font-size: 3.2rem;
+  }
+}

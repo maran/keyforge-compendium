@@ -1,0 +1,26 @@
+<div class="row">
+  <div class="col">
+    <h1 class="mb-2">New conversation</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+  <p class="text-muted">About deck <%= @deck.name %></p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 col-md-6 mb-2">
+    <%= simple_form_for @conversation do |f|%>
+      <%= f.input :deck_id, as: :hidden %>
+      <%= f.input :subject, as: :string %>
+      <%= f.fields_for :messages do |ff| %>
+        <%= ff.input :body %>
+      <% end %>
+      <%= f.submit "Send message", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+  <div class="col-12 col-md-6">
+    <h4>Buyer beware</h4>
+    <p>KeyForge Compendium shall not be responsible for any loss or damages that may result in trading with other users through our website. KC users are responsible for validating proof of ownership for all decks. that are bought, traded, or sold.</p>
+  </div>
+</div>

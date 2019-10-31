@@ -1,0 +1,148 @@
+<% des = "Get ABCE rating, cards and other information for the '#{@deck.name}' Keyforge deck." %>
+<% description des %>
+<% set_meta_tags og: {type: "article", title: @deck.name, image: @deck.cards.first.front_image, site_name:  "Keyforge Compendium", description: des, url: deck_url(@deck.uuid) } %>
+<% set_meta_tags twitter: {card: "summary", title: @deck.name, image: @deck.cards.first.front_image, site_name:  "Keyforge Compendium", description: des, url: deck_url(@deck.uuid)} %>
+<% set_meta_tags canonical: deck_url(@deck.uuid) %>
+<% title "Deck information for '#{@deck.name}'" %>
+
+<div class="row">
+  <div class="collapse" id="collapseSearch">
+    <%= render partial: "/cards/search" %>
+  </div>
+</div>
+
+<div class="kfc__deck">
+  <div class="kfc__deck__left deck-sidebar">
+    <% cache_if !current_user, @deck do %>
+      <%= render partial: "/decks/basic_info", locals: {deck: @deck} %>
+
+      <div class="deck-sidebar__actions">
+        <% if @deck.for_sale? %>
+          <%= link_to "Contact owner", new_conversation_path(deck_id: @deck.id), class: "btn btn-primary contact-owner" %>
+        <% end %>
+        <%= link_to "Analytical view", tags_deck_path(@deck.uuid), class: "btn btn-secondary" %>
+        <%= link_to "FAQs", deck_faqs_path(@deck.uuid), class: "btn btn-secondary" %>
+      </div>
+
+      <div class="deck-sidebar__card">
+        <span class="subhead">Deck Heuristic Diagnostics</span>
+        <h5><%= link_to "ADHD Rating", "https://docs.google.com/spreadsheets/d/1C7Zrwz8zXnlvT7D4532EMYmHZ1Twj7oZDKVesRqAo8o/edit#gid=1801938585"%></h5>
+
+        <ul>
+          <li><strong>A</strong>ember <p><%= @deck.a_rating.round(2) %> (<%=raw rating_makeup(@deck.diff_from_global(:a_rating)) %>)</p></li>
+          <li><strong>B</strong>oard <p><%= @deck.b_rating.round(2) %> (<%=raw  rating_makeup(@deck.diff_from_global(:b_rating)) %>)</p></li>
+          <li>Aember <strong>C</strong>ontrol <p><%= @deck.c_rating.round(2) %> (<%=raw rating_makeup(@deck.diff_from_global(:c_rating)) %>)</p></li>
+          <li><strong>E</strong>fficiency <p><%= @deck.e_rating.round(2) %> (<%=raw rating_makeup(@deck.diff_from_global(:e_rating)) %>)</p></li>
+          <li class="dark"><span><%= @deck.get_consistency_rating.round(3)%></span> Consistency</li>
+        </ul>
+      </div>
+
+      <div class="deck-sidebar__card" id="sasApp" data-id="<%= @deck.uuid%>">
+        <span class="subhead">Synergy and AntiSynergy Rating</span>
+        <h5><%= link_to "SAS Rating", "https://decksofkeyforge.com/decks/#{@deck.uuid}"%></h5>
+
+        <p id="sasWaiting">
+          <%= fa_icon "circle-o-notch spin" %> Getting SAS rating from DoK.
+        </p>
+
+        <p id="sasFail"></p>
+
+        <ul id="sasData">
+          <li id="cardRating"></li>
+          <li id="synergy"></li>
+          <li id="antiSynergy"></li>
+          <li id="sasRatingText"></li>
+        </ul>
+      </div>
+
+      <div class="deck-sidebar__card">
+        <span class="subhead">Competetive Game Stats</span>
+        <h5>Organized Play</h5>
+
+        <ul>
+          <% if @deck.wins.to_i > 0 || @deck.losses.to_i > 0 %>
+            <li>Games <p><%= @deck.wins.to_i + @deck.losses.to_i %></p></li>
+            <li>Wins <p><%= @deck.wins %></p></li>
+            <li>Losses <p><%= @deck.losses %></p></li>
+            <li>Win Rate <p><%= @deck.win_rate%>%</p></li>
+            <li>Power level <p><%= @deck.power_level %></p></li>
+            <li>Chains <p><%= @deck.chains%></p></li>
+          <% else %>
+            <li class="text-only">No competitive games registered yet.</li>
+          <% end %>
+        </ul>
+      </div>
+
+      <p class="deck-sidebar__updated"><small>Last updated: <%=l @deck.updated_at, format: "%B %d %Y at %H:%M"%>, <%= link_to "request data refresh", delayed_refresh_deck_path(@deck.uuid) %></small></p>
+    <% end %>
+  </div>
+  <div class="kfc__deck__right deck-info">
+    <div class="deck-info__header">
+      <h2>Deck Card List</h2>
+
+      <% if current_user.present? %>
+        <button class="btn btn-favourite pull-right <%= fav_class(@deck) %>" type="button" id="favouriteDeck" data-deck-id=<%=@deck.id%>>
+          <%= fa_icon :heart, id: "favIcon" %>
+        </button>
+      <% end %>
+      <button type="button" class="pull-right dropdown-toggle fa fa-ellipsis-h" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+
+      <div class="dropdown-menu dropdown-menu-right pull-right">
+        <a class="dropdown-item" data-toggle="collapse" data-target="#collapseSearch" href="#">Filter Cards</a>
+        <%= link_to "Compare Deck", compare_deck_path(@deck.uuid), class: "dropdown-item" %>
+        <% if params[:show_image].present? %>
+          <%= link_to "Switch to Table view", deck_path(@deck.uuid), class: "dropdown-item" %>
+        <% else %>
+          <%= link_to "Switch to Grid view", deck_path(@deck.uuid, show_image: true), class: "dropdown-item" %>
+        <% end %>
+        <%= link_to "Generate Decklist Image", image_deck_path(@deck.uuid, format: :png), class: "dropdown-item" %>
+        <%= link_to "View deck on Keyforgegame.com", "https://www.keyforgegame.com/deck-details/#{@deck.uuid}", class: "dropdown-item", target: "_BLANK" %>
+      </div>
+    </div>
+
+    <% unless params[:show_image] == "true" %>
+      <% @deck.houses.each do |house| %>
+        <div class="deck-info__house">
+          <h3><%= house.name %></h3>
+
+          <ul class="deck-info__house__types">
+            <% Card.card_types[1..-1].each do |t| %>
+              <% if @deck.cards.where(id: @cards.collect(&:id)).house_like(house.id).type_count_like(t[0]) > 0 %>
+                <li><%= @deck.cards.house_like(house.id).type_count_like(t[0])%> <span><%= t[0]%>s</span></li>
+              <% end %>
+            <% end %>
+          </ul>
+
+          <ul class="deck-info__cardlist deck-info__cardlist--<%= house.name.downcase %>">
+            <% @cards.house_like(house.id).order("card_type DESC").each do |c| %>
+
+              <% card_count_table(@deck,c).times do %>
+                <li>
+                  <%= fa_icon "search-plus", 'data-original-title' => image_tag(c.front_image), 'data-html' => true, 'data-container' => 'body', 'data-toggle' => 'tooltip', 'data-placement' => 'right' %>
+                  <%= card_link(c) %> - <span class="type"><%= c.card_type %></span>
+
+                  <div class="deck-info__cardlist__images">
+                    <%= display_house_icon(c.a_house) %>
+                    <%= rarity_icon(c) %>
+                  </div>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    <% else %>
+      <section class="kfc__cardlist">
+        <% @cards.order("house_id ASC, card_type ASC").each do |c| %>
+          <% card_count_table(@deck,c).times do %>
+            <div class="kfc__cardlist__card kfc-card">
+              <%= card_image_link(c,{title: c.title, alt: "Card image for #{c.title}"}) %>
+              <h5><%= c.title %></h5>
+              <p><%= c.card_type %></p>
+            </div>
+          <% end %>
+        <% end %>
+      </section>
+    <% end %>
+  </div>
+</div>

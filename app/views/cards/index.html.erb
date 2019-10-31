@@ -1,0 +1,35 @@
+<% if @expansion.present? %>
+  <% des = "Discover card properties, card rulings and frequently asked question about cards in the Keyforge set: '#{@expansion.name}'." %>
+  <% local_title =  "Keyforge Card List for set '#{@expansion.name}'" %>
+  <% url = set_cards_url(set_id: @expansion.slug) %>
+<% else %>
+  <% des = "Discover card properties, card rulings and frequently asked question about all available Keyforge cards." %>
+  <% local_title = "Keyforge Card List" %>
+  <% url = cards_url %>
+<% end %>
+
+<% set_meta_tags og: {type: "article", title: local_title , image: @cards.first.try(:front_image), site_name:  "Keyforge Compendium", description: des, url: url} %>
+<% set_meta_tags twitter: {card: "summary", title: local_title, image: @cards.first.try(:front_image), site_name:  "Keyforge Compendium", description: des, url: url} %>
+<% if @expansion.present? %>
+  <% set_meta_tags canonical:  url%>
+<% else %>
+  <% set_meta_tags canonical: url%>
+<% end %>
+<% description des %>
+
+<section class="kfc__pagehead">
+  <h1><%= title local_title %></h1>
+  <p><%= des %></p>
+</section>
+
+<%= render partial: "/cards/search" %>
+
+<section class="kfc__cardlist">
+  <% @cards.each do |c| %>
+    <div class="kfc__cardlist__card kfc-card">
+      <%= card_image_link(c,{title: c.title, alt: "Card image for #{c.title}"}) %>
+      <h5><%= c.title %></h5>
+      <p><%= c.card_type %></p>
+    </div>
+  <% end %>
+</section>

@@ -1,0 +1,8 @@
+<h1>Profile for Maran</h1>
+<dl class="row">
+  <dt class="col-3">Games registered</dt>
+  <dd class="col-9"><%= @user.games.count %></dd>
+</dl>
+<% @user.decks.each do |d| %>
+  <%= d.houses.collect(&:name) %>
+<% end %>

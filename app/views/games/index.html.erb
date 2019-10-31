@@ -1,0 +1,8 @@
+<% description "Record your past games here and keep notes on each game for future use." %>
+
+<section class="kfc__pagehead">
+  <h1><%= title "Games Overview" %></h1>
+  <p>Record your past games here and keep notes on each game for future use.</p>
+  <%= link_to "Add game", new_game_path, class: "btn btn-primary" %>
+</section>
+<%= render partial: "games/games", locals: {games: @games} %>

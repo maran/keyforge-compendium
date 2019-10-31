@@ -1,0 +1,57 @@
+<% description "Add your past games to keep track of your loses and wins." %>
+
+<section class="kfc__pagehead">
+  <h1><%= title "Add Game" %></h1>
+  <p>Add your past games to keep track of your loses and wins</p>
+  <%= link_to "View Games", "/games", class: "btn btn-primary" %>
+</section>
+
+<section class="kfc__games">  
+  <%= simple_form_for @game, html:  { class: 'kfc__games__form gform' } do |f| %>
+    <div class="gform__row">
+      <% unless params[:use_local].present? %>
+        <%= hidden_field_tag :use_local, params[:use_local].present? %>
+        <div class="gform__row__input">
+          <%= f.hidden_field :winning_deck_id %>
+          <label>Winning deck:</label>
+          <% if f.object.winning_deck_id.present? %>
+            <%= f.object.winning_deck.name %>
+          <% else %>
+            <%= f.autocomplete_field :winning_deck, autocomplete_deck_name_decks_path, "min-length": 5, :id_element => '#game_winning_deck_id', placeholder: "Start typing for the deck name",class: "mb-2 form-control" %>
+          <% end %>
+        </div>
+        <div class="gform__row__input">
+          <%= f.hidden_field :losing_deck_id %>
+          <label>Losing deck:</label>
+          <% if f.object.losing_deck_id.present? %>
+            <%= f.object.losing_deck.name %>
+          <% else %>
+            <%= f.autocomplete_field :losing_deck, autocomplete_deck_name_decks_path, "min-length": 5, :id_element => '#game_losing_deck_id', placeholder: "Start typing for the deck name",class: "mb-2 form-control" %>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="gform__row__input">
+          <%= f.input :winning_deck_id, as: :select, collection: current_user.decks %>
+        </div>
+        <div class="gform__row__input">
+          <%= f.input :losing_deck_id, as: :select, collection: current_user.decks %>
+        </div>
+      <% end %>
+
+      <% if params[:use_local].present? %>
+        <%= link_to "Use all decks", "/games/new", class: "btn btn-secondary btn--toggledecks" %>
+      <% else %>
+        <%= link_to "Use favourite decks", "/games/new?use_local=true", class: "btn btn-secondary btn--toggledecks" %>
+      <% end %>
+    </div>
+
+    <div class="gform__row gform__row--playedat">
+      <%= f.input :played_at, input_html: { class: 'select2', style: 'width:100%;', 'data-allow-clear': 'false' } %>
+    </div>
+  
+    <div class="gform__row gform__row--notes">
+      <%= f.input :notes %>
+    </div>
+    <%= f.submit "Save game", class: "btn btn-success pull-right" %>
+  <% end %>
+</section>

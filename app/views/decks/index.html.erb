@@ -1,0 +1,298 @@
+<% if @user.present? && @user.username.present? %>
+  <% des = "Search and analyse Keyforge decks favourited by '#{@user.username.titleize}'." %>
+  <% local_title = "Keyforge Deck Search in decks favourited by '#{@user.username.titleize}'." %>
+<% else %>
+  <% des = "Search and analyse Keyforge decks by name, house, included cards and ADHD rating and performance." %>
+  <% local_title = "Keyforge Deck Search" %>
+<% end %>
+
+<% description des %>
+<% set_meta_tags og: {type: "article", title: local_title, image: Card.first.front_image, site_name:  "Keyforge Compendium", description: des, url: request.original_url} %>
+<% set_meta_tags twitter: {card: "summary", title: local_title, image: Card.first.front_image, site_name:  "Keyforge Compendium", description: des, ur: request.original_url} %>
+<% if @user.present? %>
+  <% set_meta_tags canonical: fav_deck_url(@user) %>
+<% else %>
+  <% set_meta_tags canonical: decks_url %>
+<% end %>
+
+<section class="kfc__pagehead">
+  <h1><%= title local_title %></h1>
+  <% if @user.present? %>
+    <p>Search and analyse <%= @user.decks.count %> Keyforge decks by name, house, included cards and ADHD rating and performance.</p>
+  <% else %>
+    <p>Search and analyse <%= Deck.count %> Keyforge decks by name, house, included cards and ADHD rating and performance.</p>
+  <% end %>
+</section>
+
+<%= form_for_filterrific @filterrific do |f| %>
+
+  <div class="kfc__decks">
+    <div class="kfc__decks__search">
+      <div class="search-wrap">
+        <%= f.autocomplete_field :with_deck_name, autocomplete_deck_name_decks_path, "min-length": 5, placeholder: "Enter deck name" %>
+        <%= f.submit "Search", class: "btn btn-success"%>
+        <span class="js-toggle-advanced">
+          <%= has_filters(params) ? 'Show Current Filters' : 'Advanced Search' %>
+        </span>
+      </div>
+    </div>
+
+      <div class="kfc__decks__advanced js-advanced-search">
+        <div class="bycards">
+          <h5>By expansion</h5>
+          <div class="selectwrap">
+            <%= f.select(:with_expansion_id, Expansion.all.collect{|x| [x.name, x.id]},include_blank: true, class: "select2 js-trigger-filter", style: "width:100%", "data-allow-clear": false) %>
+          </div>
+        </div>
+        <div class="bycards">
+          <h5>
+            Filter decks by cards
+            <% if should_show_mav(params) %>
+              <%= link_to "Hide maverick cards",  request.params.merge(show_mavericks: false), data: {confirm: "This will reload the page, are you sure you want to do this now?"} %>
+            <% else %>
+              <%= link_to "Show maverick cards", request.params.merge(show_mavericks: true), data: {confirm: "This will reload the page, are you sure you want to do this now?"} %>
+            <% end %>
+          </h5>
+
+          <% (0..card_times(@filterrific)).each do |i| %>
+            <%= render partial: "/decks/card_filter", locals: {card_id: filterrific_value_for(i, "card_id"), card_count: filterrific_value_for(i, "card_count"), card_type: filterrific_value_for(i, "card_type"), card_title: filterrific_value_for(i, "card_title")} %>
+          <% end %>
+        </div>
+
+        <% if false %>
+          <div class="bycards">
+            <h5>
+              Filter on excluded cards
+            </h5>
+            <div id="excludedCards">
+              <%= render partial: "/decks/exclude_card_filter", locals: {card_id: filterrific_value_for_all("without_card_ids",0)} %>
+            </div>
+          </div>
+        <% end %>
+
+        <div class="byconsistency">
+          <h5>Filter decks by ADHD rating</h5>
+          <% ['a','b','c','e', 'consistency'].each do |i| %>
+            <div class="byconsistency__item">
+              <%= text_field_tag "filterrific[with_adhd]#{i}_rating",filterrific_value_for_adhd(i,"rating"), placeholder: "Enter Score #{i.titleize}" %>
+              <div class="byconsistency__item__select">
+                <%=
+                  select_tag("filterrific[with_adhd]#{i}_type",
+                  options_for_select([">", "<","="],
+                  filterrific_value_for_adhd(i, "type")),
+                  {class: "select2", style: "width: 100%", "data-placeholder": "Score type", "data-allow-clear": false})
+                %>
+              </div>
+
+            </div>
+          <% end %>
+        </div>
+
+        <div class="byconsistency">
+          <h5>Filter decks by SAS rating</h5>
+          <% Deck.sas_options.each do |i| %>
+            <div class="byconsistency__item">
+              <%= text_field_tag "filterrific[with_sas]#{i}_rating",filterrific_value_for_all("with_sas","#{i}_rating"), placeholder: "Enter #{i.titleize} Rating" %>
+              <div class="byconsistency__item__select">
+                <%=
+                  select_tag("filterrific[with_sas]#{i}_type",
+                  options_for_select([">", "<","="],
+                  filterrific_value_for_adhd(i, "type")),
+                  {class: "select2", style: "width: 100%", "data-placeholder": "Score type", "data-allow-clear": false})
+                %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+        <div class="bycardcount">
+          <h5>Filter decks by organised play stats</h5>
+          <% [ ["with_power_level","Power level"], ["with_chains", "Chains"], ["with_wins", "Wins"], ["with_losses", "Losses"] ].each do |k,v| %>
+            <div class="bycardcount__item">
+              <%= text_field_tag "filterrific[#{k}]count",filterrific_value_for_all(k, "count"), placeholder: v %>
+              <div class="bycardcount__item__select">
+                <%= select_tag("filterrific[#{k}]type",options_for_select(Card.maverick_compare_types,filterrific_value_for_all(k, "type")),{class: "select2",style: "width: 100%","data-placeholder": "Count Type","data-allow-clear": false}) %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+
+        <div class="bycardcount">
+          <h5>Filter decks by card type count</h5>
+          <% Card.card_types[1..-1].each do |i| %>
+            <div class="bycardcount__item">
+              <% i = i[0].downcase %>
+              <%= text_field_tag "filterrific[with_card_count]#{i}_count",filterrific_value_for_card_amount(i, "count"), placeholder: "#{i.titleize} Amount" %>
+              <div class="bycardcount__item__select">
+                <%= select_tag(
+                  "filterrific[with_card_count]#{i}_type",
+                  options_for_select([">", "<","="],
+                  filterrific_value_for_card_amount(i, "type")),
+                    {class: "select2", style: "width: 100%", "data-placeholder": "Count type", "data-allow-clear": false}) %>
+              </div>
+            </div>
+          <% end %>
+
+          <% Card.rarities[1..-1].each do |t| %>
+            <div class="bycardcount__item">
+              <% t = t[0].downcase %>
+              <%= text_field_tag "filterrific[with_#{t}_count]count",filterrific_value_for_all("with_#{t}_count", "count"), placeholder: "#{t.titleize} Amount" %>
+
+              <div class="bycardcount__item__select">
+                <%=
+                  select_tag("filterrific[with_#{t}_count]type",
+                  options_for_select(Card.maverick_compare_types,
+                  filterrific_value_for_all("with_#{t}_count", "type")),
+                  {class: "select2", style: "width: 100%", "data-placeholder": "Count type", "data-allow-clear": false})
+                %>
+              </div>
+            </div>
+          <% end %>
+
+          <div class="bycardcount__item">
+            <%= text_field_tag "filterrific[with_maverick_count]count",filterrific_value_for_all("with_maverick_count", "count"), placeholder: "Maverick Amount" %>
+
+            <div class="bycardcount__item__select">
+              <%= select_tag(
+                "filterrific[with_maverick_count]type",
+                options_for_select(Card.maverick_compare_types,
+                filterrific_value_for_all("with_maverick_count", "type")),
+                {
+                  class: "select2",
+                  style: "width: 100%",
+                  "data-placeholder": "Count Type",
+                  "data-allow-clear": false
+                }
+              ) %>
+            </div>
+          </div>
+        </div>
+
+        <div class="byhouse">
+          <h5>Filter decks by house</h5>
+          <div class="byhouse__wrap">
+            <%= f.fields_for :by_house do |ff| %>
+              <% @filterrific.select_options[:by_house].each do |c| %>
+                <div class="js-checkbox <%= (selected_house(f,c[0]) ? 'byhouse__wrap__item activecb' : 'byhouse__wrap__item') %>">
+                  <%= check_box_tag("filterrific[by_house][house_ids][]", c[0], selected_house(f,c[0]),  {id: c[1]}) %>
+                  <label for="<%= c[1] %>"><%=raw display_house_icon_from_name(c[1]) %></label>
+                </div>
+              <% end %>
+              <div class="byhouse__wrap__select">
+                <%= ff.select(:order_type, [["Includes"],["Excludes"], ["Or"]], {}, class: "select2", style: "width:100%;", "data-allow-clear": false) %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="bymisc">
+          <h5>Filter decks by miscellaneous</h5>
+          <div class="bymisc__wrap">
+            <div class="bymisc__wrap__item checkbox js-checkbox">
+              <%= f.check_box(:with_for_sale,{class: "form-check-input", checked: @filterrific.to_hash["with_for_sale"].present?}, true,nil) %>
+              <label class="checkbox__label" for="filterrific_with_for_sale">
+                Only search decks that are for Sale/Trade
+                <%= fa_icon "question", "data-toggle" => "tooltip", "data-original-title" => "When you favourite a deck you can give it a reason for favouring, among them because the deck is for sale/trade. This feature searches through decks that have been flagged as for sale/trade."  %>
+              </label>
+            </div>
+
+            <% if current_user.present? %>
+              <div class="bymisc__wrap__item checkbox js-checkbox">
+                <%= f.check_box(:with_favourites,{class: "form-check-input", checked: @filterrific.to_hash["with_favourites"].present?}, current_user.deck_ids,nil) %>
+                <label class="checkbox__label" for="filterrific_with_favourites">
+                  Only Search favourites
+                </label>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="bymisc">
+          <div class="bymisc__wrap">
+            <h5>Sort by</h5>
+            <div class="selectwrap">
+              <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by], {}, class: "select2 js-trigger-filter", style: "width:100%", "data-allow-clear": false) %>
+            </div>
+          </div>
+        </div>
+
+        <%= f.submit "Filter decks", class: "btn btn-success large-filter"%>
+      </div>
+    </div>
+
+    <% if params.has_key?(:filterrific) %>
+      <div class="kfc__decks__list">
+        <div class="kfc__decks__list--resultf">
+          <p><%= search_result(@filterrific, @deck_amount) %></p>
+
+          <div class="selectwrap">
+            <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by], {}, class: "select2 js-trigger-filter", style: "width:100%", "data-allow-clear": false) %>
+          </div>
+        </div>
+
+        <div class="kfc__decks__list--table table-responsive">
+          <table class="table table-dark table-hover">
+            <thead class="thead-dark">
+              <th>Title</th>
+              <th>Houses</th>
+              <th>Creatures</th>
+              <th>Actions</th>
+              <th>Artifacts</th>
+              <th>Upgrades</th>
+              <th>Consistency</th>
+              <th>SAS Rating</th>
+              <th></th>
+            </thead>
+            <tbody>
+              <% @decks.each do |deck| %>
+                <tr class="link-row" data-href="<%= deck_path(deck.uuid) %>">
+                  <td><%= deck.name %></td>
+                  <td><%=raw display_house_icons(deck) %></td>
+                  <td><%= deck.creature_count %></td>
+                  <td><%= deck.action_count %></td>
+                  <td><%= deck.artifact_count %></td>
+                  <td><%= deck.upgrade_count %></td>
+                  <td><%= deck.consistency_rating %></td>
+                  <td><%= deck.sas_rating %></td>
+                  <td class="new-window"><a href="<%= deck_path(deck.uuid) %>" target="_blanks" class="fa fa-external-link"></a></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="kfc__decks__list--pagination">
+          <%= link_to_prev_page @decks, '« Previous Page' %>
+          <%= link_to_next_page @decks, 'Next Page »' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<div style="display: none">
+  <div id="excludeTemplate">
+    <%= render partial: "/decks/exclude_card_filter", locals: {card_id: 0} %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).on("click", "#addNewCard" , function() {
+    $.get("/decks/new_card_filter", function(e){
+      $('.bycards').append(e);
+      window.bindRemove();
+      enableSelect2();
+    });
+  });
+
+  $(document).on("click", "#removeCard" , function() {
+    $(this).parent().remove();
+  });
+
+  $(document).on("click", "#removeExCard" , function() {
+    $(this).parent().remove();
+  });
+
+  $(document).on("click", "#addExNewCard" , function() {
+    var res = $("#excludeTemplate").clone().appendTo("#excludedCards")
+  });
+</script>

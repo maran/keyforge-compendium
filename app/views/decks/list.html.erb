@@ -1,0 +1,43 @@
+<div style="margin-left: 14px">
+  <h6 class="text-center">Decklist for <%= @deck.name %></h6>
+  <div class="row clearfix">
+    <% @cards.select("house_id, houses.name").distinct(:house_id).joins("JOIN houses ON houses.id = cards.house_id").order("houses.name").each do |c| %>
+      <div class="float-left" style="width: 220px">
+        <%= display_house_icon(c.a_house) %>
+        <%= c.a_house.name %>
+        <hr/>
+        <ul class="list-group">
+          <% @cards.where(house_id: c.a_house.id).order("house_id ASC, card_type ASC").each do |c| %>
+            <% card_count_table(@deck,c).times do %>
+              <li class="list-group-item <%= card_list_item_class(c) %>">
+                <%= c.title %>
+                <div class="float-right"><%=raw show_amber(c.amber) %></div>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </div>
+  <hr/>
+  <div class="row clearfix">
+    <div class="text-right float-left"  style="width: 200px;">
+      <%= @deck.get_sas_rating.round(2) %> SAS Rating<br/>
+      <% Card.card_types[1..-1].each do |t| %>
+        <%= @deck.cards.type_count_like(t) %> <%= t[0].downcase %>s<br/>
+      <% end %>
+    </div>
+    <div class="text-center float-left" style="width: 200px">
+      scan to see full details
+      <%=raw deck_url(@deck.uuid).to_qr_image(size: "75x75", margin: 2) %>
+    </div>
+    <div class="float-left text-left" style="width: 240px">
+      Consistency: <%= @deck.consistency_rating.round(2) %></br>
+      <strong>a</strong>ember <%= @deck.a_rating.round(2) %> (<%=raw rating_makeup(@deck.diff_from_global(:a_rating)) %>)</br>
+        <strong>b</strong>oard <%= @deck.b_rating.round(2) %> (<%=raw rating_makeup(@deck.diff_from_global(:b_rating)) %>)</br>
+        aember control <%= @deck.c_rating.round(2) %> (<%=raw rating_makeup(@deck.diff_from_global(:c_rating)) %>)</br>
+        <strong>e</strong>fficiency <%= @deck.e_rating.round(2) %> (<%=raw rating_makeup(@deck.diff_from_global(:e_rating)) %>)</br>
+    </div>
+  </div>
+  <div class="row" style="font-size: 7px">0.3 (<%= Date.today %>)</div>
+</div>

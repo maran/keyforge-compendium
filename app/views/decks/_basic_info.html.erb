@@ -1,0 +1,47 @@
+<div class="deck-card">
+  <span class="deck-card__house">
+    <% deck.houses.each do |house| %>
+    <span class="<%= house.name.downcase %>-bg hn-b"></span>
+    <% end %>
+
+    <% deck.houses.each do |house| %>
+    <span class="hn-t"><%= house.name %></span>
+    <% end %>
+  </span>
+
+  <h1><%= link_to @deck.name, "https://www.keyforgegame.com/deck-details/#{@deck.uuid}", target: "_blank"%></h1>
+  <div class="deck-card__raritys">
+    <% Card.rarities[1..-1].flatten.collect(&:downcase).each do |rarity| %>
+      <% if deck.send("#{rarity}_count") > 0 %>
+        <span>
+          <%= rarity_icon(rarity) %>
+          <%= deck.send("#{rarity}_count") %>
+        </span>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="deck-card__ratings">
+    <div class="deck-card__ratings__consistency">
+      <span><%= deck.get_consistency_rating.round(2)%></span>
+      Consistency
+    </div>
+    <div class="deck-card__ratings__sas">
+      <span id="sasRating"><%= deck.sas_rating %></span>
+      SAS Rating
+    </div>
+  </div>
+
+  <ul class="deck-card__cards">
+    <% Card.card_types[1..-1].each do |t| %>
+      <li>
+        <%= deck.send("#{t[0].downcase}_count") %>
+        <span><%= t[0]%>s</span>
+      </li>
+    <% end %>
+  </ul>
+
+  <% if @deck.for_sale? %>
+    <span class="alert-forsale">Available For Sale / Trade</span>
+  <% end %>
+</div>

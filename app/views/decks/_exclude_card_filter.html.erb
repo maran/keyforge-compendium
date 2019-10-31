@@ -1,0 +1,7 @@
+<div class="bycards__item">
+  <div class="bycards__item__select">
+    <%= select_tag 'filterrific[without_card_ids][]', options_for_select(Card.options_for_deck_filter(false),card_id),{class: "mb-2", style: "width: 100%", "data-placeholder": "Select required card that can't be in the deck."} %>
+  </div>
+  <input type="button" class="btn btn-danger" id="removeExCard" value="Remove Card">
+  <input type="button" class="btn btn-secondary addCard" id="addExNewCard" value="Add Card">
+</div>

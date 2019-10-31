@@ -1,0 +1,68 @@
+<% description "Discover KeyForge card and deck statistics." %>
+
+<section class="kfc__pagehead">
+  <h1><%= title "KeyForge Deck Statistics" %></h1>
+  <p>These statistics are based on KeyForge cards found in <%= Deck.count%> decks.</p>
+  <% if has_filters(params) %>
+    <button data-toggle="collapse" href="#filterList" class="btn btn-primary">Show filters</button>
+  <% end %>
+</section>
+
+
+<div class="kfc__stats">
+  <div class="kfc__stats__table">
+    <h2>Cards most present in Decks</h2>
+    <table class="table table-dark table-hover">
+      <thead class="thead-dark">
+        <th>Rarity</th>
+        <th>Card Name</th>
+        <th>Occurances</th>
+      </thead>
+      <tbody>
+        <% @top_cards.each do |c| %>
+        <tr class="link-row" data-href="<%= card_path(c.slug) %>">
+          <td><%= rarity_icon(c) %></td>
+          <td><%= c.title %></td>
+          <td><%= c.cards_decks_count  %> (<%= c.percentage_present_decks %>%)</td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="kfc__stats__table">
+    <h2>Cards least present in decks</h2>
+    <table class="table table-dark table-hover">
+      <thead class="thead-dark">
+        <th>Rarity</th>
+        <th>Card Name</th>
+        <th>Occurances</th>
+      </thead>
+      <tbody>
+        <% @bottom_cards.each do |c| %>
+        <tr class="link-row" data-href="<%= card_path(c.slug) %>">
+          <td><%= rarity_icon(c) %></td>
+          <td><%= c.title %></td>
+          <td><%= c.cards_decks_count   %> (<%= c.percentage_present_decks %>%)</td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<% cache Deck.count do %>
+  <div class="kfc__stats">
+    <div class="kfc__stats__table">
+      <h2>Decks added by Week</h2>
+      <%= line_chart Deck.where("created_at > ?",Date.parse('2018-12-05')).group_by_week(:created_at).count, colors: ['#FFF'] %>
+    </div>
+  </div>
+  <br/></br>
+  <div class="kfc__stats">
+    <div class="kfc__stats__table">
+      <h2>Decks added by Weekday</h2>
+      <%= column_chart Deck.where("created_at > ?",Date.parse('2018-12-05')).group_by_day_of_week(:created_at, format: "%a").count, colors: ['#FFF'] %>
+    </div>
+  </div>
+<% end %>
+

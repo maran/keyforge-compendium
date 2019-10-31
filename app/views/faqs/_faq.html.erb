@@ -1,0 +1,25 @@
+  <div class="kfc__faqs__qa">
+    <h5 data-toggle="collapse" data-target="#collapseFaqCard-<%= f.id %>" class="collapsed">
+      <%= strip_tags(raw Kramdown::Document.new(f.question).to_html) %>
+    </h5>
+
+    <div id="collapseFaqCard-<%= f.id %>" class="collapse answer" data-parent="#<%= parent.present? ? parent : "accordion-card-#{c.id}" %>">
+      <div>
+        <%=raw Kramdown::Document.new(f.answer).to_html %>
+            <ul class="answer__info">
+              <% if f.source.present? || f.rule_source.present? %>
+                <li>
+                  Source:
+                  <%= link_to f.source.name, f.source.url if f.source.present? %>
+                  <% if f.rule_source.present? && f.source.present? %>&<% end %>
+                  <%= link_to "Rules - #{f.rule_source.title}",rules_path(anchor: f.rule_source.slug) if f.rule_source.present? %>
+                </li>
+              <% end %>
+              <li>
+                FAQ updated on:
+                <span><%= f.updated_at.strftime('%B %d %Y') %></span>
+              </li>
+            </ul>
+      </div>
+    </div>
+  </div>

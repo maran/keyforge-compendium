@@ -1,0 +1,412 @@
+.kfc__deck {
+  margin: 3rem auto 0;
+  max-width: $max-width;
+  display: block;
+
+  .card {
+    background: #363C49;
+
+    .card-body {
+      background: #2B323F;
+    }
+  }
+
+  &__right,
+  &__left {
+    width: 100%;
+  }
+
+  &__left {
+    margin-bottom:3rem;
+  }
+
+  @include breakpoint(sm) {
+    display:flex;
+
+    &__left {
+      min-width: 40rem;
+      max-width: 40rem;
+      margin-right: 3rem;
+    }
+
+    &__right {
+      width: auto;
+      flex: 1;
+    }
+  }
+
+  .deck-sidebar {
+    &__actions {
+      float: left;
+      width: 100%;
+      margin: 0 0 2rem;
+
+      a {
+        width: calc(50% - 1rem);
+        margin: 0 1rem 0 0;
+        float: left;
+        line-height: 5rem;
+        height: 5rem;
+
+        &:last-child {
+          margin: 0 0 0 1rem;
+        }
+
+        &.contact-owner {
+          width: 100%;
+          margin:0 0 2rem;
+        }
+      }
+    }
+
+    &__updated {
+      float:left;
+      width: 100%;
+      text-align: center;
+      border-top: 1px solid #2F333A;
+      padding-top: 1rem;
+    }
+
+    &__card {
+      float: left;
+      width: 100%;
+      margin:0 0 2rem;
+      padding:2rem;
+      background-image: image-url('deck-bg.png');
+      background-color: rgba(73, 85, 107, 0.25);
+      background-position:center;
+      background-size: cover;
+      background-repeat:no-repeat;
+
+      span.subhead {
+        color: $text-muted;
+        font-weight: 700;
+        letter-spacing: .1rem;
+        font-size: 1.2rem;
+        float: left;
+        width: 100%;
+        text-align:center;
+      }
+
+      h5 {
+        font-size: 1.7rem;
+        text-align: center;
+        float: left;
+        width: 100%;
+        line-height: 2.4rem;
+        margin: 0 0 2rem;
+        padding:0 2rem;
+      }
+
+      #sasFail {
+        float: left;
+        width: 100%;
+        color: #F0465F;
+        text-align:center;
+        font-weight: 600;
+        margin:0;
+      }
+
+      #sasWaiting {
+        float: left;
+        width: 100%;
+        text-align:center;
+      }
+
+      ul {
+        margin:0;
+        padding:0;
+        float:left;
+        width:100%;
+
+        li {
+          width: calc(50% - .5rem);
+          float: left;
+          margin: 0 0 1rem .5rem;
+          background: #333B47;
+          border: 1px solid #39414E;
+          border-radius: .2rem;
+          line-height: 2rem;
+          text-align: center;
+          list-style-type: none;
+          color: #FFF;
+          font-size: 1.4rem;
+          padding:1rem 0;
+          font-weight: bold;
+
+          &.text-only {
+            float: left;
+            width: 100%;
+            margin:0;
+            background:none;
+            border:0;
+            padding:0;
+            color: #F0465F;
+          }
+
+          p {
+            float:left;
+            width:100%;
+            margin:0;
+            color: #D9DBDC;
+            font-weight: 600;
+          }
+
+          &:nth-child(odd) {
+            margin: 0 .5rem 1rem 0;
+          }
+
+          &:last-child {
+            &.dark {
+              width: 100%;
+              float: left;
+              margin:0;
+              background:#171C24;
+              padding:1.2rem 0 1.5rem;
+              text-align:center;
+              text-transform: uppercase;
+              font-weight:bold;
+              color: rgba(255, 255, 255, .3);
+              box-shadow:0 0 1px rgba(0, 0, 0, .5);
+              letter-spacing:.1rem;
+              font-size:1.2rem;
+              border:none;
+
+              span {
+                font-size: 2rem;
+                color: #FFF;
+                float: left;
+                width: 100%;
+                text-align: center;
+                line-height: 2.8rem;
+                letter-spacing: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .deck-info {
+    &__header {
+      border-bottom:1px solid rgba(255,255,255,.1);
+      margin:0 0 2rem;
+      height: 5rem;
+      position:relative;
+
+      h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        line-height: 4.6rem;
+        margin:0;
+        float: left;
+      }
+
+      .btn-favourite {
+        margin-right: 5.1rem;
+        padding:0;
+        i {
+          font-size: 1.6rem;
+        }
+      }
+
+      .dropdown-toggle {
+        position:absolute;
+        top:0;
+        right:0;
+        color:#FFF;
+        font-size:2rem;
+        background:none;
+        width: 5rem;
+        line-height: 4.6rem;
+        border:0;
+        border-left:1px solid rgba(255,255,255,.1);
+        transition:.2s all;
+
+        &:hover {
+          text-decoration: none;
+          background: rgba(0,0,0, .1);
+        }
+
+        &:after {
+          display:none;
+        }
+      }
+
+      .dropdown-item {
+        font-weight: bold;
+        font-size:1.3rem;
+      }
+    }
+
+    &__house {
+      float:left;
+      width:100%;
+      margin:0 0 2rem;
+
+      h3 {
+        font-size: 1.8rem;
+        color: #FFF;
+        margin:0;
+        line-height: 2.8rem;
+      }
+
+      &__types {
+        margin:0 0 2rem;
+        padding:0;
+        float:left;
+        width:100%;
+
+        li {
+          list-style-type:none;
+          float:left;
+          padding-right: 1rem;
+          margin-right: 1rem;
+          font-size: 1.3rem;
+          font-weight:600;
+          border-right: 1px solid rgba(255,255,255, .1);
+
+          &:last-child {
+            margin:0;
+            padding:0;
+            border:none;
+          }
+        }
+      }
+
+      p {
+        color: rgba(255,255,255, .5);
+        margin:0 0 2rem;
+      }
+    }
+
+    &__cardlist {
+      margin:0;
+      padding:0;
+      float:left;
+      width:100%;
+
+      &__images {
+        position: absolute;
+        top:.8rem;
+        right:1rem;
+
+        img {
+          float:left;
+          margin-left:.5rem;
+          height:2.2rem;
+          width: 2.2rem;
+
+          &:last-child {
+            height: 2rem;
+            width: 2rem;
+            margin-top: .1rem;
+          }
+        }
+      }
+
+      li {
+        float:left;
+        width:100%;
+        list-style-type: none;
+        line-height: 4rem;
+        border-bottom: 5px solid $background;
+        padding-left: 1.5rem;
+        position: relative;
+        color:#FFF;
+        font-weight:bold;
+        font-size: 1.3rem;
+        background: rgba(73, 85, 107, 0.25);
+
+        i {
+          margin-right: 1rem;
+          cursor:pointer;
+        }
+
+        strong {
+          margin-right: 1rem;
+          border-right: 1px solid rgba(255,255,255,.1);
+          padding-right: 1rem;
+        }
+
+        span.type {
+          opacity:.5;
+        }
+
+        &:before {
+          content:'';
+          height: 4rem;
+          position: absolute;
+          top:0;
+          left:0;
+          width:.2rem;
+          display:block;
+        }
+      }
+
+      &--brobnar {
+        background: image-url('brobnar-bg.png') no-repeat center;
+        background-size: cover;
+
+        li:before {
+          background: $brobnar;
+        }
+      }
+
+      &--shadows {
+        background: image-url('shadows-bg.png') no-repeat top;
+        background-size: cover;
+
+        li:before {
+          background: $shadows;
+        }
+      }
+
+      &--dis {
+        background: image-url('dis-bg.png') no-repeat top;
+        background-size: cover;
+
+        li:before {
+          background: $dis;
+        }
+      }
+
+      &--untamed {
+        background: image-url('untamed-bg.png') no-repeat center;
+        background-size: cover;
+
+        li:before {
+          background: $untamed;
+        }
+      }
+
+      &--sanctum {
+        background: image-url('sanctum-bg.png') no-repeat center;
+        background-size: cover;
+
+        li:before {
+          background: $sanctum;
+        }
+      }
+
+      &--logos {
+        background: image-url('logos-bg.png') no-repeat center;
+        background-size: cover;
+
+        li:before {
+          background: $logos;
+        }
+      }
+
+      &--mars {
+        background: image-url('mars-bg.png') no-repeat center;
+        background-size: cover;
+
+        li:before {
+          background: $mars;
+        }
+      }
+    }
+  }
+}

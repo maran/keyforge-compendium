@@ -1,0 +1,51 @@
+// Placeholder Mixin
+@mixin placeholder {
+    &::-webkit-input-placeholder {
+        @content;
+    }
+    &:-moz-placeholder { 
+        @content;
+    }
+    &::-moz-placeholder { 
+        @content;
+    }
+    &:-ms-input-placeholder {
+        @content;
+    }
+}
+
+// Responsive Mixin
+@mixin breakpoint($class) {
+  @if $class == xs {
+    @media (min-width: 501px) { @content; }
+  }
+ 
+  @else if $class == sm {
+    @media (min-width: 769px) { @content; }
+  }
+ 
+  @else if $class == md {
+    @media (min-width: 1025px) { @content; }
+  }
+ 
+  @else if $class == lg {
+    @media (min-width: 1200px) { @content; }
+  }
+ 
+  @else {
+    @warn "Breakpoint mixin supports: xs, sm, md, lg";
+  }
+}
+
+// Animations
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-.5rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
